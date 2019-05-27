@@ -42,6 +42,7 @@ CQEVENT(int32_t, Initialize, 4)(int32_t AuthCode) {
 * 如非必要，不建议在这里加载窗口。（可以添加菜单，让用户手动打开窗口）
 */
 CQEVENT(int32_t, __eventStartup, 0)() {
+	
 	//启动消息处理线程
 	groupMsgSub->start();
 	return 0;
@@ -102,8 +103,7 @@ CQEVENT(int32_t, __eventPrivateMsg, 24)(int32_t subType, int32_t msgId, int64_t 
 * Type=2 群消息
 */
 CQEVENT(int32_t, __eventGroupMsg, 36)(int32_t subType, int32_t msgId, int64_t fromGroup, int64_t fromQQ, const char *fromAnonymous, const char *msg, int32_t font) {
-	//抛入消息
-	groupMsgSub->pushMsg(msgId, fromGroup, fromQQ, msg);
+	groupMsgSub->pushMsg(msgId, fromGroup, fromQQ, msg);//抛入消息
 	return EVENT_IGNORE; //关于返回值说明, 见“_eventPrivateMsg”函数
 }
 
