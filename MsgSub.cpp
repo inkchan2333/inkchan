@@ -7,7 +7,22 @@
 //导入全局变量 ac   在appmain.h 中定义
 extern int ac;
 
+int64_t OsuGroup[5] = { 982711563 };
+int64_t AnimeGroup[5] = { 789434274 };
+int64_t SetsuFuction_Active = {};
+/*struct Group {
+	//bool SeTsuFunction_Active;
+	//找不到色图！！色图功能没了！
+	
+	bool OsuGroup;
+	bool AnimeGroup;
 
+};*/
+
+/*bool OsuGroups(msg.fromGroup) {
+
+}
+*/
 void GroupMsgSub::threadMain()
 {
 	while (!m_quit)
@@ -18,125 +33,156 @@ void GroupMsgSub::threadMain()
 			GroupMsg msg = m_groupMsgBuffer.front();
 			m_groupMsgBuffer.pop();
 			m_mutex.unlock();
-			
-			
+		
+			/*				通	用				*/
+
+
 			if (msg.msg=="test!!!")
 			{
 				CQ_sendGroupMsg(ac, msg.fromGroup, "响应测试成功，c++天下第一。");
+				break;
 			}
 			else if (msg.msg == "摸摸小蛋糕") {
 				CQ_sendGroupMsg(ac, msg.fromGroup, "wwwwww");
+				break;
 			}
 			else if (msg.msg == "小蛋糕" && msg.fromQQ == 982957484) {
 				CQ_sendGroupMsg(ac, msg.fromGroup, "主人好，今天也辛苦了");
+				break;
 			}
 			else if (msg.msg == "!stats me" && msg.fromQQ == 982957484) {
 				CQ_sendGroupMsg(ac, msg.fromGroup, "唔...主人，咱找不到你的Stats呢 QAQ");
+				break;
 			}
 			else if (msg.msg == "!stats me") {
 				CQ_sendGroupMsg(ac, msg.fromGroup, "Stats不想写了，先给Mc让让路。");
+				break;
 			}
 
 			/* 
 			
 					###动漫之家漫画推荐###
 			
-														*/
+													*/
 
-			else if (msg.msg == "漫画推荐") {
-				//PICK
-				int pick = random(10);
-
-				switch (pick) {
-					case 1:{
-						CQ_sendGroupMsg(ac, msg.fromGroup, "给你推荐的：《Girl Friends》\N 已完结");
-						CQ_sendGroupMsg(ac, msg.fromGroup, "(来自B漫)Address：https://manga.bilibili.com/m/detail/mc24791");
-						break;
-					}
-					case 2: {
-						CQ_sendGroupMsg(ac, msg.fromGroup, "给你推荐的：《惊爆草莓》，作者：公野樱子");
-						CQ_sendGroupMsg(ac, msg.fromGroup, "(来自动漫之家)Address：https://manhua.dmzj.com/jbcm/");
-						break;
-					}
-					case 3: {
-						CQ_sendGroupMsg(ac, msg.fromGroup, "给你推荐的：《圣母在上》，作者：长沢智");
-						CQ_sendGroupMsg(ac, msg.fromGroup, "(来自动漫之家)Address：https://manhua.dmzj.com/smzsmlydnw/");
-						break;
-					}
-					case 4: {
-						CQ_sendGroupMsg(ac, msg.fromGroup, "给你推荐的：《甜蜜X密友》，作者：桐原いづみ");
-						CQ_sendGroupMsg(ac, msg.fromGroup, "(来自动漫之家)Address：https://manhua.dmzj.com/tianmixmiyou/");
-						break;
-					}
-					case 5: {
-						CQ_sendGroupMsg(ac, msg.fromGroup, "给你推荐的：《初恋姐妹》\N 作者：东云水生");
-						CQ_sendGroupMsg(ac, msg.fromGroup, "(来自动漫之家)Address：https://manhua.dmzj.com/chulianjiemei/");
-						break;
-					}
-					case 6: {
-						CQ_sendGroupMsg(ac, msg.fromGroup, "给你推荐的：《月夜的奶酪》\N 作者：てぃんくる");
-						CQ_sendGroupMsg(ac, msg.fromGroup, "(来自动漫之家)Address：https://manhua.dmzj.com/yueyedenailao/");
-						break;
-					}
-					case 7: {
-						CQ_sendGroupMsg(ac, msg.fromGroup, "给你推荐的：《Happy Sugar Life》\N 作者：键空老贼NMSL");
-						CQ_sendGroupMsg(ac, msg.fromGroup, "Address：没有！自己去百度贴吧找资源！！！");
-						break;
-					}
-					case 8: {
-						CQ_sendGroupMsg(ac, msg.fromGroup, "给你推荐的：《轻声密语》\N 作者：池田学志");
-						CQ_sendGroupMsg(ac, msg.fromGroup, "(来自动漫之家)Address：https://manhua.dmzj.com/qingshengmiyu/");
-						break;
-					}
-					case 9: {
-						CQ_sendGroupMsg(ac, msg.fromGroup, "给你推荐的：《为了让学姐鼓起干劲，我决定献出我自己》\N 作者：佐仓吉太");
-						CQ_sendGroupMsg(ac, msg.fromGroup, "(来自B漫)Address：https://manga.bilibili.com/m/detail/mc25905");
-						break;
-					}
-					default:{
-						CQ_sendGroupMsg(ac, msg.fromGroup, "本Bot不想给你推荐任何漫画!!!");
-					}
+			if (msg.msg == "漫画推荐") {
+			//PICK
+			int pick = 0;
+			pick = random(10);
+			switch (pick) {
+				case 1:{
+					CQ_sendGroupMsg(ac, msg.fromGroup, "给你推荐的：《Girl Friends》\n 已完结");
+					CQ_sendGroupMsg(ac, msg.fromGroup, "(来自B漫)Address：https://manga.bilibili.com/m/detail/mc24791");
+					break;
 				}
+				case 2: {
+					CQ_sendGroupMsg(ac, msg.fromGroup, "给你推荐的：《惊爆草莓》，作者：公野樱子");
+					CQ_sendGroupMsg(ac, msg.fromGroup, "(来自动漫之家)Address：https://manhua.dmzj.com/jbcm/");
+					break;
+				}
+				case 3: {
+					CQ_sendGroupMsg(ac, msg.fromGroup, "给你推荐的：《圣母在上》，作者：长沢智");
+					CQ_sendGroupMsg(ac, msg.fromGroup, "(来自动漫之家)Address：https://manhua.dmzj.com/smzsmlydnw/");
+					break;
+				}
+				case 4: {
+					CQ_sendGroupMsg(ac, msg.fromGroup, "给你推荐的：《甜蜜X密友》，作者：桐原いづみ");
+					CQ_sendGroupMsg(ac, msg.fromGroup, "(来自动漫之家)Address：https://manhua.dmzj.com/tianmixmiyou/");
+					break;
+				}
+				case 5: {
+					CQ_sendGroupMsg(ac, msg.fromGroup, "给你推荐的：《初恋姐妹》\n 作者：东云水生");
+					CQ_sendGroupMsg(ac, msg.fromGroup, "(来自动漫之家)Address：https://manhua.dmzj.com/chulianjiemei/");
+					break;
+				}
+				case 6: {
+					CQ_sendGroupMsg(ac, msg.fromGroup, "给你推荐的：《月夜的奶酪》\n 作者：てぃんくる");
+					CQ_sendGroupMsg(ac, msg.fromGroup, "(来自动漫之家)Address：https://manhua.dmzj.com/yueyedenailao/");
+					break;
+				}
+				case 7: {
+					CQ_sendGroupMsg(ac, msg.fromGroup, "给你推荐的：《Happy Sugar Life》\N 作者：键空老贼NMSL");
+					CQ_sendGroupMsg(ac, msg.fromGroup, "Address：没有！自己去百度贴吧找资源！！！");
+					break;
+				}
+				case 8: {
+					CQ_sendGroupMsg(ac, msg.fromGroup, "给你推荐的：《轻声密语》\n 作者：池田学志");
+					CQ_sendGroupMsg(ac, msg.fromGroup, "(来自动漫之家)Address：https://manhua.dmzj.com/qingshengmiyu/");
+					break;
+				}
+				case 9: {
+					CQ_sendGroupMsg(ac, msg.fromGroup, "给你推荐的：《为了让学姐鼓起干劲，我决定献出我自己》\n 作者：佐仓吉太");
+					CQ_sendGroupMsg(ac, msg.fromGroup, "(来自B漫)Address：https://manga.bilibili.com/m/detail/mc25905");
+					break;
+				}
+				default:{
+					CQ_sendGroupMsg(ac, msg.fromGroup, "本Bot不想给你推荐任何漫画!!!");
+				}
+			}
 
 
 			}
 
 		/*
-				#######################用于迫害黄老板的##############			
+				##############用于迫害##############			
 		
 																					*/
 
-			
-			else if (msg.msg == "火 黄老板 火") {
-				CQ_sendGroupMsg(ac, msg.fromGroup, "火 黄老板 火");
-				CQ_sendPrivateMsg(ac, 416575098, "酸 黄老板 酸");
-			}
-			else if (msg.msg == "酸 黄老板 酸") {
-				CQ_sendGroupMsg(ac, msg.fromGroup, "酸 黄老板 酸");
-				CQ_sendPrivateMsg(ac, 416575098, "火 黄老板 火");
-			}
-			else if (msg.msg == "迫害黄老板") {
-				CQ_sendGroupMsg(ac, msg.fromGroup, "女装  黄老板  女装");
-			}
-			else if (msg.msg == "迫害") {
-				CQ_sendGroupMsg(ac, msg.fromGroup, "コウちゃん 女装！！");
-			}
-			else if (msg.msg == "女装") {
-				CQ_sendGroupMsg(ac, msg.fromGroup, "Kou酱~~~~女装！！");
-			}
-			else if (msg.fromQQ == 416575098 && msg.msg == "艹") {
-				CQ_sendGroupMsg(ac, msg.fromGroup, "艹！黄老板 艹！");
+			//Dalou彩蛋
+			if (msg.msg == "!hello" && msg.fromQQ == 1061566571) {
+				CQ_sendGroupMsg(ac, msg.fromGroup, "响应测试失败，嘤嘤嘤");
+				break;
 
 			}
-			else if (msg.fromQQ == 416575098 && msg.msg == "？") {
-				CQ_sendGroupMsg(ac, msg.fromGroup, "? Kou酱 ?");
+
+			if (msg.fromGroup == 982711563) {
+				if (msg.msg == "火 黄老板 火") {
+					CQ_sendGroupMsg(ac, msg.fromGroup, "火 黄老板 火");
+					break;
+				}
+				else if (msg.msg == "酸 黄老板 酸") {
+					CQ_sendGroupMsg(ac, msg.fromGroup, "酸 黄老板 酸");
+					break;
+				}
+				else if (msg.msg == "迫害黄老板") {
+					int PICKS;
+					PICKS = random(4);
+
+					switch (PICKS){
+					case 1: {
+						CQ_sendGroupMsg(ac, msg.fromGroup, "女装  黄老板  女装");
+						break;
+					}case 2: {
+						CQ_sendGroupMsg(ac, msg.fromGroup, "コウちゃん 女装！！");
+						break;
+					}case 3: {
+						CQ_sendGroupMsg(ac, msg.fromGroup, "Kou酱~~~~女装！！");
+						break;
+					}
+					default:
+						{
+						CQ_sendGroupMsg(ac, msg.fromGroup, "黄老板快女装！"); 
+						}
+					}      
+				}
+				else if (msg.fromQQ == 416575098 && msg.msg == "艹") {
+					CQ_sendGroupMsg(ac, msg.fromGroup, "艹！黄老板 艹！");
+					break;
+				}
+				else if (msg.fromQQ == 416575098 && msg.msg == "？") {
+					CQ_sendGroupMsg(ac, msg.fromGroup, "? Kou酱 ?");
+					break;
+				}
+				else if (msg.fromQQ == 416575098 && msg.msg == "？？？") {
+					CQ_sendGroupMsg(ac, msg.fromGroup, "??? Kou酱 ???");
+					break;
+				}
 			}
-			else if (msg.fromQQ == 416575098 && msg.msg == "？？？") {
-				CQ_sendGroupMsg(ac, msg.fromGroup, "??? Kou酱 ???");
-			}
+
 			else if (msg.msg == "!sleep") {
 				//CQ_setGroupBan(ac, msg.fromGroup, fromQQ, 12000);
 				CQ_sendGroupMsg(ac, msg.fromGroup, "おやすみなさい、お主人様～");
+				break;
 			}
 
 			/*
@@ -149,13 +195,16 @@ void GroupMsgSub::threadMain()
 			else if (msg.msg == "!白名单申请") {
 				//CQ_sendGroupMsg(ac, msg.fromGroup, "请私聊InkBot！发送你的ID");
 				CQ_sendGroupMsg(ac, msg.fromGroup, "自动申请系统坏掉了(┬＿┬)！给我去填表，不写了，麻烦死了，https://docs.qq.com/form/fill/DUmVZekRqRGJUYVRp");
+				break;
 			}
 			else if (msg.msg == "!github") { 
-				CQ_sendGroupMsg(ac, msg.fromGroup, "主人写的代码太丑了，才不给你看呢。（傲娇）"); 
+				CQ_sendGroupMsg(ac, msg.fromGroup, "https://github.com/inkchan2333/inkchan"); 
+				break;
 			}
 			else if (msg.msg == "!简单整合包") {
 				CQ_sendGroupMsg(ac, msg.fromGroup, "喵(>^ω^<)？整合包下载地址： https://cola.sayobot.cn/inkcake/Minecraft%201.12.2%20IC2%20forge2768%20Shaders.zip");
 				CQ_sendGroupMsg(ac, msg.fromGroup, "谢谢夜妈妈的云盘支持！");
+				break;
 			}
 
 

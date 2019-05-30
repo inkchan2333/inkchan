@@ -5,7 +5,8 @@
 */
 
 #include "stdafx.h"
-#include "string"
+#include "string.h"
+#include <iostream>
 #include "cqp.h"
 #include "appmain.h" //应用AppID等信息，请正确填写，否则酷Q可能无法加载
 #include "MsgSub.h"
@@ -115,7 +116,7 @@ CQEVENT(int32_t, __eventGroupMsg, 36)(int32_t subType, int32_t msgId, int64_t fr
 */
 CQEVENT(int32_t, __eventRequest_AddFriend, 24)(int32_t subType, int32_t sendTime, int64_t fromQQ, const char *msg, const char *responseFlag) {
 
-	//CQ_setFriendAddRequest(ac, responseFlag, REQUEST_ALLOW, "");
+	CQ_setFriendAddRequest(ac, responseFlag, REQUEST_ALLOW, "");
 
 	return EVENT_IGNORE; //关于返回值说明, 见“_eventPrivateMsg”函数
 }
@@ -128,12 +129,43 @@ CQEVENT(int32_t, __eventRequest_AddFriend, 24)(int32_t subType, int32_t sendTime
 * responseFlag 反馈标识(处理请求用)
 */
 CQEVENT(int32_t, __eventRequest_AddGroup, 32)(int32_t subType, int32_t sendTime, int64_t fromGroup, int64_t fromQQ, const char *msg, const char *responseFlag) {
+	int LEN;
+	LEN = strlen(msg);
+	if (LEN <= 4 && fromGroup == 789434274) {
+		CQ_setGroupAddRequestV2(ac, responseFlag, REQUEST_GROUPADD, REQUEST_DENY,"答案字数不够");
+		CQ_sendGroupMsg(ac, 772753419, "已拒绝此人加群，理由：字符参数不够，返回值为false");
+		LEN = -1;
+		return EVENT_BLOCK;
+	}
+	else return EVENT_IGNORE;
+}
 
-	//if (subType == 1) {
-	//	CQ_setGroupAddRequestV2(ac, responseFlag, REQUEST_GROUPADD, REQUEST_ALLOW, "");
-	//} else if (subType == 2) {
-	//	CQ_setGroupAddRequestV2(ac, responseFlag, REQUEST_GROUPINVITE, REQUEST_ALLOW, "");
-	//}
 
+CQEVENT(int32_t, __eventSystem_GroupMemberIncrease, 32)(int32_t subType, int32_t sendTime, int64_t fromGroup, int64_t fromQQ, int64_t beingOperateQQ) {
+	
+	if (fromGroup == 982711563) {
+		CQ_sendGroupMsg(ac, 982711563,"欢迎加入cocomi王国！ DD斩首");
+		return EVENT_BLOCK;
+	}
+	if (fromGroup == 414752793)
+	{
+		CQ_sendGroupMsg(ac, 414752793, "欢迎来到inkCake的后宫（大雾）");
+		CQ_sendGroupMsg(ac, 414752793, "主人你个变态（超大声！）");
+		return EVENT_BLOCK;
+	}
+	if (fromGroup == 789434274) {
+
+		CQ_sendGroupMsg(ac, 789434274, "欢迎加入二刺螈（雾）百合控聚集交流地，在这里你甚至可以讨论各种百合作品（大雾）。进群后请看公告群规w");
+		return EVENT_BLOCK;
+	}
+	
+	
 	return EVENT_IGNORE; //关于返回值说明, 见“_eventPrivateMsg”函数
+}
+
+CQEVENT(int32_t, __eventSystem_GroupMemberDecrease, 32)(int32_t subType, int32_t sendTime, int64_t fromGroup, int64_t fromQQ, int64_t beingOperateQQ) {
+	CQ_sendGroupMsg(ac, fromGroup, "本群消失人口+1");
+
+
+	return EVENT_BLOCK; //关于返回值说明, 见“_eventPrivateMsg”函数
 }
