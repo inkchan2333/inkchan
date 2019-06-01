@@ -11,6 +11,9 @@
 #include "appmain.h" //应用AppID等信息，请正确填写，否则酷Q可能无法加载
 #include "MsgSub.h"
 #include "TransactionManagement.h"
+#include<stdio.h>
+#include<stdlib.h>
+#define random(x) (rand()%x)
 using namespace std;
 
 int ac = -1; //AuthCode 调用酷Q的方法时需要用到
@@ -137,14 +140,40 @@ CQEVENT(int32_t, __eventRequest_AddGroup, 32)(int32_t subType, int32_t sendTime,
 		LEN = -1;
 		return EVENT_BLOCK;
 	}
+	if (fromGroup == 414752793) {
+		CQ_setGroupAddRequestV2(ac, responseFlag, REQUEST_GROUPADD, REQUEST_ALLOW, "");
+		return EVENT_BLOCK;
+	}
 	else return EVENT_IGNORE;
 }
 
 
 CQEVENT(int32_t, __eventSystem_GroupMemberIncrease, 32)(int32_t subType, int32_t sendTime, int64_t fromGroup, int64_t fromQQ, int64_t beingOperateQQ) {
 	
-	if (fromGroup == 982711563) {
-		CQ_sendGroupMsg(ac, 982711563,"欢迎加入cocomi王国！ DD斩首");
+	if (fromGroup == 982711563 || fromGroup == 764640926) {
+		int pik;
+		pik = random(3);
+		
+		switch (pik) {
+			case 1: {
+				
+				CQ_sendGroupMsg(ac, fromGroup, "欢迎加入cocomi王国！ DD开始有丝分裂了。");
+			}
+				
+			case 2: {
+				CQ_sendGroupMsg(ac, fromGroup, "欢迎加入cocomi王国！ DD斩首。");
+			}
+
+			default: {
+				CQ_sendGroupMsg(ac, fromGroup, "欢迎加入cocomi王国！ 黄老板今天女装了吗");
+			}
+
+		}
+		return EVENT_BLOCK;
+		
+	}
+	if (fromGroup == 495093070) {
+		CQ_sendGroupMsg(ac, 495093070, "我也不知道这个群是干嘛的，总之欢迎你的加入，想玩音游请进414752793");
 		return EVENT_BLOCK;
 	}
 	if (fromGroup == 414752793)

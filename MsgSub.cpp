@@ -70,50 +70,51 @@ void GroupMsgSub::threadMain()
 				case 1:{
 					CQ_sendGroupMsg(ac, msg.fromGroup, "给你推荐的：《Girl Friends》\n 已完结");
 					CQ_sendGroupMsg(ac, msg.fromGroup, "(来自B漫)Address：https://manga.bilibili.com/m/detail/mc24791");
-					 
+					break;
 				}
 				case 2: {
 					CQ_sendGroupMsg(ac, msg.fromGroup, "给你推荐的：《惊爆草莓》，作者：公野樱子");
 					CQ_sendGroupMsg(ac, msg.fromGroup, "(来自动漫之家)Address：https://manhua.dmzj.com/jbcm/");
-					 
+					break;
 				}
 				case 3: {
 					CQ_sendGroupMsg(ac, msg.fromGroup, "给你推荐的：《圣母在上》，作者：长沢智");
 					CQ_sendGroupMsg(ac, msg.fromGroup, "(来自动漫之家)Address：https://manhua.dmzj.com/smzsmlydnw/");
-					 
+					break;
 				}
 				case 4: {
 					CQ_sendGroupMsg(ac, msg.fromGroup, "给你推荐的：《甜蜜X密友》，作者：桐原いづみ");
 					CQ_sendGroupMsg(ac, msg.fromGroup, "(来自动漫之家)Address：https://manhua.dmzj.com/tianmixmiyou/");
-					 
+					break;
 				}
 				case 5: {
 					CQ_sendGroupMsg(ac, msg.fromGroup, "给你推荐的：《初恋姐妹》\n 作者：东云水生");
 					CQ_sendGroupMsg(ac, msg.fromGroup, "(来自动漫之家)Address：https://manhua.dmzj.com/chulianjiemei/");
-					 
+					break;
 				}
 				case 6: {
 					CQ_sendGroupMsg(ac, msg.fromGroup, "给你推荐的：《月夜的奶酪》\n 作者：てぃんくる");
 					CQ_sendGroupMsg(ac, msg.fromGroup, "(来自动漫之家)Address：https://manhua.dmzj.com/yueyedenailao/");
-					 
+					break;
 				}
 				case 7: {
 					CQ_sendGroupMsg(ac, msg.fromGroup, "给你推荐的：《Happy Sugar Life》\N 作者：键空老贼NMSL");
 					CQ_sendGroupMsg(ac, msg.fromGroup, "Address：没有！自己去百度贴吧找资源！！！");
-					 
+					break;
 				}
 				case 8: {
 					CQ_sendGroupMsg(ac, msg.fromGroup, "给你推荐的：《轻声密语》\n 作者：池田学志");
 					CQ_sendGroupMsg(ac, msg.fromGroup, "(来自动漫之家)Address：https://manhua.dmzj.com/qingshengmiyu/");
-					 
+					break;
 				}
 				case 9: {
 					CQ_sendGroupMsg(ac, msg.fromGroup, "给你推荐的：《为了让学姐鼓起干劲，我决定献出我自己》\n 作者：佐仓吉太");
 					CQ_sendGroupMsg(ac, msg.fromGroup, "(来自B漫)Address：https://manga.bilibili.com/m/detail/mc25905");
-					 
+					break;
 				}
 				default:{
 					CQ_sendGroupMsg(ac, msg.fromGroup, "本Bot不想给你推荐任何漫画!!!");
+				
 				}
 			}
 
@@ -146,20 +147,21 @@ void GroupMsgSub::threadMain()
 					PICKS = random(4);
 
 					switch (PICKS){
-					case 1: {
+					 case 1: {
 						CQ_sendGroupMsg(ac, msg.fromGroup, "女装  黄老板  女装");
-						 
-					}case 2: {
+						break;
+					 }case 2: {
 						CQ_sendGroupMsg(ac, msg.fromGroup, "コウちゃん 女装！！");
-						 
-					}case 3: {
+						break;
+					 }case 3: {
 						CQ_sendGroupMsg(ac, msg.fromGroup, "Kou酱~~~~女装！！");
-						 
-					}
-					default:
-						{
+						break;
+
+					 }
+					 default:
+					 {
 						CQ_sendGroupMsg(ac, msg.fromGroup, "黄老板快女装！"); 
-						}
+					 }
 					}      
 				}
 				else if (msg.fromQQ == 416575098 && msg.msg == "艹") {
@@ -176,18 +178,11 @@ void GroupMsgSub::threadMain()
 				}
 			}
 
-			else if (msg.msg == "!sleep") {
+			/*else */ if (msg.msg == "!sleep") {
 				//CQ_setGroupBan(ac, msg.fromGroup, fromQQ, 12000);
 				CQ_sendGroupMsg(ac, msg.fromGroup, "おやすみなさい、お主人様～");
 				 
 			}
-
-			/*
-			
-					#################### MC或者编程相关 ##############
-			
-																				*/
-
 
 			else if (msg.msg == "!白名单申请") {
 				//CQ_sendGroupMsg(ac, msg.fromGroup, "请私聊InkBot！发送你的ID");
