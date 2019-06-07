@@ -150,9 +150,9 @@ CQEVENT(int32_t, __eventRequest_AddGroup, 32)(int32_t subType, int32_t sendTime,
 
 CQEVENT(int32_t, __eventSystem_GroupMemberIncrease, 32)(int32_t subType, int32_t sendTime, int64_t fromGroup, int64_t fromQQ, int64_t beingOperateQQ) {
 	
-	if (fromGroup == 982711563 || fromGroup == 764640926) {
+	if (fromGroup == 982711563) {
 		int pik;
-		pik = random(3);
+		pik = random(4);
 		
 		switch (pik) {
 			case 1: {
@@ -165,6 +165,11 @@ CQEVENT(int32_t, __eventSystem_GroupMemberIncrease, 32)(int32_t subType, int32_t
 				break;
 			}
 
+			case 3: {
+				CQ_sendGroupMsg(ac, fromGroup,"欢迎加入cocomi王国，想玩音游请进414752793");
+				break;
+			
+			}
 			default: {
 				CQ_sendGroupMsg(ac, fromGroup, "欢迎加入cocomi王国！ 黄老板今天女装了吗");
 			}
@@ -180,11 +185,10 @@ CQEVENT(int32_t, __eventSystem_GroupMemberIncrease, 32)(int32_t subType, int32_t
 	if (fromGroup == 414752793)
 	{
 		CQ_sendGroupMsg(ac, 414752793, "欢迎来到inkCake的后宫（大雾）");
-		CQ_sendGroupMsg(ac, 414752793, "主人你个变态（超大声！）");
+		//CQ_sendGroupMsg(ac, 414752793, "主人你个变态（超大声！）");
 		return EVENT_BLOCK;
 	}
 	if (fromGroup == 789434274) {
-
 		CQ_sendGroupMsg(ac, 789434274, "欢迎加入二刺螈（雾）百合控聚集交流地，在这里你甚至可以讨论各种百合作品（大雾）。进群后请看公告群规w");
 		return EVENT_BLOCK;
 	}
