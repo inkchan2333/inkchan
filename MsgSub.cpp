@@ -3,6 +3,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 #define random(x) (rand()%x)
+
 #include <string.h>
 //导入全局变量 ac   在appmain.h 中定义
 extern int ac;
@@ -34,25 +35,40 @@ void GroupMsgSub::threadMain()
 			/*				通	用				*/
 
 
-			if (msg.msg=="test!!!")
+			if (msg.msg=="testMsgSub")
 			{
-				CQ_sendGroupMsg(ac, msg.fromGroup, "响应测试成功，c++天下第一。");
+				CQ_sendGroupMsg(ac, msg.fromGroup, "MsgSub响应测试成功。");
 				 
 			}
 			else if (msg.msg == "摸摸小蛋糕") {
-				CQ_sendGroupMsg(ac, msg.fromGroup, "wwwwww");
-				 
+				int pickT = -114514;
+				pickT = random(5);
+				
+				switch (pickT){
+				case 1:
+				{
+					CQ_sendGroupMsg(ac, msg.fromGroup, "不给摸，都给我去揉光小桐喵的脑袋"); break;
+				}
+				case 2:
+				{
+					CQ_sendGroupMsg(ac, msg.fromGroup, "痒死了，wwwwwwww"); break;
+				}
+				case 3:
+				{
+					CQ_sendGroupMsg(ac, msg.fromGroup, "摸我干啥，让黄老板女装啊！"); break;
+				}
+				case 4:
+				{
+					CQ_sendGroupMsg(ac, msg.fromGroup, "摸我干啥，让糕姐快点vtb出道啊。"); break;
+				}
+					default: {
+						CQ_sendDiscussMsg(ac, msg.fromGroup, "晕了晕了，太用力了啦傻逼。");
+					}
+				
+				}
 			}
 			else if (msg.msg == "小蛋糕" && msg.fromQQ == 982957484) {
-				CQ_sendGroupMsg(ac, msg.fromGroup, "主人好，今天也辛苦了");
-				 
-			}
-			else if (msg.msg == "!stats me" && msg.fromQQ == 982957484) {
-				CQ_sendGroupMsg(ac, msg.fromGroup, "唔...主人，咱找不到你的Stats呢 QAQ");
-				 
-			}
-			else if (msg.msg == "!stats me") {
-				CQ_sendGroupMsg(ac, msg.fromGroup, "Stats不想写了，先给Mc让让路。");
+				CQ_sendGroupMsg(ac, msg.fromGroup, "变态，才不理你");
 				 
 			}
 
@@ -61,10 +77,11 @@ void GroupMsgSub::threadMain()
 					###动漫之家漫画推荐###
 			
 													*/
+			if (msg.msg == "漫画推荐" && msg.fromGroup == 789434274) {
+			
+				CQ_sendGroupMsg(ac, msg.fromGroup, "让群主快点把列表给我，自己找我哪有那个本事");
 
-			if (msg.msg == "漫画推荐") {
-			//PICK
-			int pick = 0;
+			/*int pick = 0;
 			pick = random(10);
 			switch (pick) {
 				case 1:{
@@ -116,26 +133,30 @@ void GroupMsgSub::threadMain()
 					CQ_sendGroupMsg(ac, msg.fromGroup, "本Bot不想给你推荐任何漫画!!!");
 				
 				}
+				}
+				*/	
+
 			}
-
-
-			}
-
-		/*
-				##############用于迫害##############			
-		
-																					*/
 
 			//Dalou彩蛋
 			if (msg.msg == "!hello" && msg.fromQQ == 1061566571) {
 				CQ_sendGroupMsg(ac, msg.fromGroup, "响应测试失败，嘤嘤嘤");
-				 
+			}
+			//DD彩蛋
+			else if (msg.msg == "啾啾小蛋糕" && msg.fromQQ == 594231762) {
+				CQ_sendGroupMsg(ac, msg.fromGroup, "啾啾蒂蒂");
+			}
+			else if (msg.msg == "迫害浅衍") {
+				CQ_sendGroupMsg(ac, msg.fromGroup, "龙 浅衍 龙");
 
+			}
+			else if (msg.msg == "小蛋糕啾啾" && msg.fromQQ == 460885800) {
+				CQ_sendGroupMsg(ac, msg.fromGroup, "啾啾风子");
 			}
 
 			if (msg.fromGroup == 982711563) {
 				if (msg.msg == "火 黄老板 火") {
-					CQ_sendGroupMsg(ac, msg.fromGroup, "火 黄老板 火");
+					//CQ_sendGroupMsg(ac, msg.fromGroup, "火 黄老板 火");
 					 
 				}
 				else if (msg.msg == "酸 黄老板 酸") {
@@ -165,7 +186,7 @@ void GroupMsgSub::threadMain()
 					}      
 				}
 				else if (msg.fromQQ == 416575098 && msg.msg == "艹") {
-					CQ_sendGroupMsg(ac, msg.fromGroup, "艹！黄老板 艹！");
+					CQ_sendGroupMsg(ac, msg.fromGroup, "艹！コウちゃん 艹！");
 					 
 				}
 				else if (msg.fromQQ == 416575098 && msg.msg == "？") {
@@ -180,23 +201,20 @@ void GroupMsgSub::threadMain()
 
 			/*else */ if (msg.msg == "!sleep") {
 				//CQ_setGroupBan(ac, msg.fromGroup, fromQQ, 12000);
-				CQ_sendGroupMsg(ac, msg.fromGroup, "おやすみなさい、お主人様～");
+				CQ_sendGroupMsg(ac, msg.fromGroup, "滚，睡觉就睡觉，不理你了。");
 				 
 			}
 
 			else if (msg.msg == "!白名单申请") {
-				//CQ_sendGroupMsg(ac, msg.fromGroup, "请私聊InkBot！发送你的ID");
-				CQ_sendGroupMsg(ac, msg.fromGroup, "自动申请系统坏掉了(┬＿┬)！给我去填表，不写了，麻烦死了，https://docs.qq.com/form/fill/DUmVZekRqRGJUYVRp");
-				 
+				CQ_sendGroupMsg(ac, msg.fromGroup, "私发给我，没这个功能");
+				//CQ_sendGroupMsg(ac, msg.fromGroup, "这样...你输入/whitelist 你的ID （不允许英文，小心我抽死你）");
 			}
 			else if (msg.msg == "!github") { 
-				CQ_sendGroupMsg(ac, msg.fromGroup, "https://github.com/inkchan2333/inkchan"); 
+				CQ_sendGroupMsg(ac, msg.fromGroup, "这代码tmd臭死了，算了给你看看吧，https://github.com/inkchan2333/inkchan"); 
 				 
 			}
 			else if (msg.msg == "!简单整合包") {
-				CQ_sendGroupMsg(ac, msg.fromGroup, "喵(>^ω^<)？整合包下载地址： https://cola.sayobot.cn/inkcake/Minecraft%201.12.2%20IC2%20forge2768%20Shaders.zip");
-				CQ_sendGroupMsg(ac, msg.fromGroup, "谢谢夜妈妈的云盘支持！");
-				 
+				CQ_sendGroupMsg(ac, msg.fromGroup, "？（满速）整合包下载地址： https://cola.sayobot.cn/inkcake/Minecraft%201.12.2%20IC2%20forge2768%20Shaders.zip");
 			}
 
 

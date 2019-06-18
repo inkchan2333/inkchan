@@ -8,22 +8,28 @@
 #include "string.h"
 #include <iostream>
 #include "cqp.h"
-#include "appmain.h" //åº”ç”¨AppIDç­‰ä¿¡æ¯ï¼Œè¯·æ­£ç¡®å¡«å†™ï¼Œå¦åˆ™é…·Qå¯èƒ½æ— æ³•åŠ è½½
+#include "appmain.h" //Ó¦ÓÃAppIDµÈĞÅÏ¢£¬ÇëÕıÈ·ÌîĞ´£¬·ñÔò¿áQ¿ÉÄÜÎŞ·¨¼ÓÔØ
 #include "MsgSub.h"
 #include "TransactionManagement.h"
 #include<stdio.h>
 #include<stdlib.h>
+#include "InkSE.h"
+
+
 #define random(x) (rand()%x)
 using namespace std;
 
-int ac = -1; //AuthCode è°ƒç”¨é…·Qçš„æ–¹æ³•æ—¶éœ€è¦ç”¨åˆ°
+int ac = -1; //AuthCode µ÷ÓÃ¿áQµÄ·½·¨Ê±ĞèÒªÓÃµ½
 bool enabled = false;
 
 
 GroupMsgSub * groupMsgSub = TransactionManagement::getInstance()->getGroupMsgSubInstance();
 
+
+
+
 /* 
-* è¿”å›åº”ç”¨çš„ApiVerã€Appidï¼Œæ‰“åŒ…åå°†ä¸ä¼šè°ƒç”¨
+* ·µ»ØÓ¦ÓÃµÄApiVer¡¢Appid£¬´ò°üºó½«²»»áµ÷ÓÃ
 */
 CQEVENT(const char*, AppInfo, 0)() {
 	return CQAPPINFO;
@@ -31,8 +37,8 @@ CQEVENT(const char*, AppInfo, 0)() {
 
 
 /* 
-* æ¥æ”¶åº”ç”¨AuthCodeï¼Œé…·Qè¯»å–åº”ç”¨ä¿¡æ¯åï¼Œå¦‚æœæ¥å—è¯¥åº”ç”¨ï¼Œå°†ä¼šè°ƒç”¨è¿™ä¸ªå‡½æ•°å¹¶ä¼ é€’AuthCodeã€‚
-* ä¸è¦åœ¨æœ¬å‡½æ•°å¤„ç†å…¶ä»–ä»»ä½•ä»£ç ï¼Œä»¥å…å‘ç”Ÿå¼‚å¸¸æƒ…å†µã€‚å¦‚éœ€æ‰§è¡Œåˆå§‹åŒ–ä»£ç è¯·åœ¨Startupäº‹ä»¶ä¸­æ‰§è¡Œï¼ˆType=1001ï¼‰ã€‚
+* ½ÓÊÕÓ¦ÓÃAuthCode£¬¿áQ¶ÁÈ¡Ó¦ÓÃĞÅÏ¢ºó£¬Èç¹û½ÓÊÜ¸ÃÓ¦ÓÃ£¬½«»áµ÷ÓÃÕâ¸öº¯Êı²¢´«µİAuthCode¡£
+* ²»ÒªÔÚ±¾º¯Êı´¦ÀíÆäËûÈÎºÎ´úÂë£¬ÒÔÃâ·¢ÉúÒì³£Çé¿ö¡£ÈçĞèÖ´ĞĞ³õÊ¼»¯´úÂëÇëÔÚStartupÊÂ¼şÖĞÖ´ĞĞ£¨Type=1001£©¡£
 */
 CQEVENT(int32_t, Initialize, 4)(int32_t AuthCode) {
 	ac = AuthCode;
@@ -41,25 +47,25 @@ CQEVENT(int32_t, Initialize, 4)(int32_t AuthCode) {
 
 
 /*
-* Type=1001 é…·Qå¯åŠ¨
-* æ— è®ºæœ¬åº”ç”¨æ˜¯å¦è¢«å¯ç”¨ï¼Œæœ¬å‡½æ•°éƒ½ä¼šåœ¨é…·Qå¯åŠ¨åæ‰§è¡Œä¸€æ¬¡ï¼Œè¯·åœ¨è¿™é‡Œæ‰§è¡Œåº”ç”¨åˆå§‹åŒ–ä»£ç ã€‚
-* å¦‚éå¿…è¦ï¼Œä¸å»ºè®®åœ¨è¿™é‡ŒåŠ è½½çª—å£ã€‚ï¼ˆå¯ä»¥æ·»åŠ èœå•ï¼Œè®©ç”¨æˆ·æ‰‹åŠ¨æ‰“å¼€çª—å£ï¼‰
+* Type=1001 ¿áQÆô¶¯
+* ÎŞÂÛ±¾Ó¦ÓÃÊÇ·ñ±»ÆôÓÃ£¬±¾º¯Êı¶¼»áÔÚ¿áQÆô¶¯ºóÖ´ĞĞÒ»´Î£¬ÇëÔÚÕâÀïÖ´ĞĞÓ¦ÓÃ³õÊ¼»¯´úÂë¡£
+* Èç·Ç±ØÒª£¬²»½¨ÒéÔÚÕâÀï¼ÓÔØ´°¿Ú¡££¨¿ÉÒÔÌí¼Ó²Ëµ¥£¬ÈÃÓÃ»§ÊÖ¶¯´ò¿ª´°¿Ú£©
 */
 CQEVENT(int32_t, __eventStartup, 0)() {
 	
-	//å¯åŠ¨æ¶ˆæ¯å¤„ç†çº¿ç¨‹
+	//Æô¶¯ÏûÏ¢´¦ÀíÏß³Ì
 	groupMsgSub->start();
 	return 0;
 }
 
 
 /*
-* Type=1002 é…·Qé€€å‡º
-* æ— è®ºæœ¬åº”ç”¨æ˜¯å¦è¢«å¯ç”¨ï¼Œæœ¬å‡½æ•°éƒ½ä¼šåœ¨é…·Qé€€å‡ºå‰æ‰§è¡Œä¸€æ¬¡ï¼Œè¯·åœ¨è¿™é‡Œæ‰§è¡Œæ’ä»¶å…³é—­ä»£ç ã€‚
-* æœ¬å‡½æ•°è°ƒç”¨å®Œæ¯•åï¼Œé…·Qå°†å¾ˆå¿«å…³é—­ï¼Œè¯·ä¸è¦å†é€šè¿‡çº¿ç¨‹ç­‰æ–¹å¼æ‰§è¡Œå…¶ä»–ä»£ç ã€‚
+* Type=1002 ¿áQÍË³ö
+* ÎŞÂÛ±¾Ó¦ÓÃÊÇ·ñ±»ÆôÓÃ£¬±¾º¯Êı¶¼»áÔÚ¿áQÍË³öÇ°Ö´ĞĞÒ»´Î£¬ÇëÔÚÕâÀïÖ´ĞĞ²å¼ş¹Ø±Õ´úÂë¡£
+* ±¾º¯Êıµ÷ÓÃÍê±Ïºó£¬¿áQ½«ºÜ¿ì¹Ø±Õ£¬Çë²»ÒªÔÙÍ¨¹ıÏß³ÌµÈ·½Ê½Ö´ĞĞÆäËû´úÂë¡£
 */
 CQEVENT(int32_t, __eventExit, 0)() {
-	//å›æ”¶èµ„æº
+	//»ØÊÕ×ÊÔ´
 	if (groupMsgSub!=nullptr)
 	{
 		groupMsgSub->quite();
@@ -68,10 +74,10 @@ CQEVENT(int32_t, __eventExit, 0)() {
 }
 
 /*
-* Type=1003 åº”ç”¨å·²è¢«å¯ç”¨
-* å½“åº”ç”¨è¢«å¯ç”¨åï¼Œå°†æ”¶åˆ°æ­¤äº‹ä»¶ã€‚
-* å¦‚æœé…·Qè½½å…¥æ—¶åº”ç”¨å·²è¢«å¯ç”¨ï¼Œåˆ™åœ¨_eventStartup(Type=1001,é…·Qå¯åŠ¨)è¢«è°ƒç”¨åï¼Œæœ¬å‡½æ•°ä¹Ÿå°†è¢«è°ƒç”¨ä¸€æ¬¡ã€‚
-* å¦‚éå¿…è¦ï¼Œä¸å»ºè®®åœ¨è¿™é‡ŒåŠ è½½çª—å£ã€‚ï¼ˆå¯ä»¥æ·»åŠ èœå•ï¼Œè®©ç”¨æˆ·æ‰‹åŠ¨æ‰“å¼€çª—å£ï¼‰
+* Type=1003 Ó¦ÓÃÒÑ±»ÆôÓÃ
+* µ±Ó¦ÓÃ±»ÆôÓÃºó£¬½«ÊÕµ½´ËÊÂ¼ş¡£
+* Èç¹û¿áQÔØÈëÊ±Ó¦ÓÃÒÑ±»ÆôÓÃ£¬ÔòÔÚ_eventStartup(Type=1001,¿áQÆô¶¯)±»µ÷ÓÃºó£¬±¾º¯ÊıÒ²½«±»µ÷ÓÃÒ»´Î¡£
+* Èç·Ç±ØÒª£¬²»½¨ÒéÔÚÕâÀï¼ÓÔØ´°¿Ú¡££¨¿ÉÒÔÌí¼Ó²Ëµ¥£¬ÈÃÓÃ»§ÊÖ¶¯´ò¿ª´°¿Ú£©
 */
 CQEVENT(int32_t, __eventEnable, 0)() {
 	enabled = true;
@@ -80,10 +86,10 @@ CQEVENT(int32_t, __eventEnable, 0)() {
 
 
 /*
-* Type=1004 åº”ç”¨å°†è¢«åœç”¨
-* å½“åº”ç”¨è¢«åœç”¨å‰ï¼Œå°†æ”¶åˆ°æ­¤äº‹ä»¶ã€‚
-* å¦‚æœé…·Qè½½å…¥æ—¶åº”ç”¨å·²è¢«åœç”¨ï¼Œåˆ™æœ¬å‡½æ•°*ä¸ä¼š*è¢«è°ƒç”¨ã€‚
-* æ— è®ºæœ¬åº”ç”¨æ˜¯å¦è¢«å¯ç”¨ï¼Œé…·Qå…³é—­å‰æœ¬å‡½æ•°éƒ½*ä¸ä¼š*è¢«è°ƒç”¨ã€‚
+* Type=1004 Ó¦ÓÃ½«±»Í£ÓÃ
+* µ±Ó¦ÓÃ±»Í£ÓÃÇ°£¬½«ÊÕµ½´ËÊÂ¼ş¡£
+* Èç¹û¿áQÔØÈëÊ±Ó¦ÓÃÒÑ±»Í£ÓÃ£¬Ôò±¾º¯Êı*²»»á*±»µ÷ÓÃ¡£
+* ÎŞÂÛ±¾Ó¦ÓÃÊÇ·ñ±»ÆôÓÃ£¬¿áQ¹Ø±ÕÇ°±¾º¯Êı¶¼*²»»á*±»µ÷ÓÃ¡£
 */
 CQEVENT(int32_t, __eventDisable, 0)() {
 	enabled = false;
@@ -92,54 +98,81 @@ CQEVENT(int32_t, __eventDisable, 0)() {
 
 
 /*
-* Type=21 ç§èŠæ¶ˆæ¯
-* subType å­ç±»å‹ï¼Œ11/æ¥è‡ªå¥½å‹ 1/æ¥è‡ªåœ¨çº¿çŠ¶æ€ 2/æ¥è‡ªç¾¤ 3/æ¥è‡ªè®¨è®ºç»„
+* Type=21 Ë½ÁÄÏûÏ¢
+* subType ×ÓÀàĞÍ£¬11/À´×ÔºÃÓÑ 1/À´×ÔÔÚÏß×´Ì¬ 2/À´×ÔÈº 3/À´×ÔÌÖÂÛ×é
 */
 CQEVENT(int32_t, __eventPrivateMsg, 24)(int32_t subType, int32_t msgId, int64_t fromQQ, const char *msg, int32_t font) {
 
-	//å¦‚æœè¦å›å¤æ¶ˆæ¯ï¼Œè¯·è°ƒç”¨é…·Qæ–¹æ³•å‘é€ï¼Œå¹¶ä¸”è¿™é‡Œ return EVENT_BLOCK - æˆªæ–­æœ¬æ¡æ¶ˆæ¯ï¼Œä¸å†ç»§ç»­å¤„ç†  æ³¨æ„ï¼šåº”ç”¨ä¼˜å…ˆçº§è®¾ç½®ä¸º"æœ€é«˜"(10000)æ—¶ï¼Œä¸å¾—ä½¿ç”¨æœ¬è¿”å›å€¼
-	//å¦‚æœä¸å›å¤æ¶ˆæ¯ï¼Œäº¤ç”±ä¹‹åçš„åº”ç”¨/è¿‡æ»¤å™¨å¤„ç†ï¼Œè¿™é‡Œ return EVENT_IGNORE - å¿½ç•¥æœ¬æ¡æ¶ˆæ¯
+	//Èç¹ûÒª»Ø¸´ÏûÏ¢£¬Çëµ÷ÓÃ¿áQ·½·¨·¢ËÍ£¬²¢ÇÒÕâÀï return EVENT_BLOCK - ½Ø¶Ï±¾ÌõÏûÏ¢£¬²»ÔÙ¼ÌĞø´¦Àí  ×¢Òâ£ºÓ¦ÓÃÓÅÏÈ¼¶ÉèÖÃÎª"×î¸ß"(10000)Ê±£¬²»µÃÊ¹ÓÃ±¾·µ»ØÖµ
+	//Èç¹û²»»Ø¸´ÏûÏ¢£¬½»ÓÉÖ®ºóµÄÓ¦ÓÃ/¹ıÂËÆ÷´¦Àí£¬ÕâÀï return EVENT_IGNORE - ºöÂÔ±¾ÌõÏûÏ¢
 	return EVENT_IGNORE;
 }
 
 
 /*
-* Type=2 ç¾¤æ¶ˆæ¯
+* Type=2 ÈºÏûÏ¢
 */
 CQEVENT(int32_t, __eventGroupMsg, 36)(int32_t subType, int32_t msgId, int64_t fromGroup, int64_t fromQQ, const char *fromAnonymous, const char *msg, int32_t font) {
-	groupMsgSub->pushMsg(msgId, fromGroup, fromQQ, msg);//æŠ›å…¥æ¶ˆæ¯
-	return EVENT_IGNORE; //å…³äºè¿”å›å€¼è¯´æ˜, è§â€œ_eventPrivateMsgâ€å‡½æ•°
+	bool responseFlag_AT = false;
+	
+	if (inkSE_searchAT_bot(msg) && fromQQ == 982957484) {
+
+		if (inkSE_authCode_mon(msg) == false) {
+			CQ_sendGroupMsg(ac, fromGroup, "ÎŞ·¨Ê¶±ğACÂë");
+
+		}
+		else if (inkSE_authCode_mon(msg) == true) {
+			CQ_sendGroupMsg(ac, fromGroup, "AC´úÂëÒÑÈ·ÈÏ£¬ÕıÔÚ±¸·İ·şÎñÆ÷...(½öÓÃÓÚ²âÊÔ£¬²»»áÕæµÄÖ´ĞĞ)");
+			/*
+
+
+			*/
+			CQ_sendGroupMsg(ac, fromGroup, "ÒÑÇ¿ÖÆ¹Ø±Õ·şÎñÆ÷¡£(½öÓÃÓÚ²âÊÔ£¬²»»áÕæµÄÖ´ĞĞ)");
+
+		}
+
+		return EVENT_BLOCK;
+	}
+	
+	groupMsgSub->pushMsg(msgId, fromGroup, fromQQ, msg);//Å×ÈëÏûÏ¢
+	
+	return EVENT_IGNORE; //¹ØÓÚ·µ»ØÖµËµÃ÷, ¼û¡°_eventPrivateMsg¡±º¯Êı
 }
 
 
 /*
-* Type=301 è¯·æ±‚-å¥½å‹æ·»åŠ 
-* msg é™„è¨€
-* responseFlag åé¦ˆæ ‡è¯†(å¤„ç†è¯·æ±‚ç”¨)
+* Type=301 ÇëÇó-ºÃÓÑÌí¼Ó
+* msg ¸½ÑÔ
+* responseFlag ·´À¡±êÊ¶(´¦ÀíÇëÇóÓÃ)
 */
 CQEVENT(int32_t, __eventRequest_AddFriend, 24)(int32_t subType, int32_t sendTime, int64_t fromQQ, const char *msg, const char *responseFlag) {
 
 	CQ_setFriendAddRequest(ac, responseFlag, REQUEST_ALLOW, "");
 
-	return EVENT_IGNORE; //å…³äºè¿”å›å€¼è¯´æ˜, è§â€œ_eventPrivateMsgâ€å‡½æ•°
+	return EVENT_IGNORE; //¹ØÓÚ·µ»ØÖµËµÃ÷, ¼û¡°_eventPrivateMsg¡±º¯Êı
 }
 
 
 /*
-* Type=302 è¯·æ±‚-ç¾¤æ·»åŠ 
-* subType å­ç±»å‹ï¼Œ1/ä»–äººç”³è¯·å…¥ç¾¤ 2/è‡ªå·±(å³ç™»å½•å·)å—é‚€å…¥ç¾¤
-* msg é™„è¨€
-* responseFlag åé¦ˆæ ‡è¯†(å¤„ç†è¯·æ±‚ç”¨)
+* Type=302 ÇëÇó-ÈºÌí¼Ó
+* subType ×ÓÀàĞÍ£¬1/ËûÈËÉêÇëÈëÈº 2/×Ô¼º(¼´µÇÂ¼ºÅ)ÊÜÑûÈëÈº
+* msg ¸½ÑÔ
+* responseFlag ·´À¡±êÊ¶(´¦ÀíÇëÇóÓÃ)
 */
 CQEVENT(int32_t, __eventRequest_AddGroup, 32)(int32_t subType, int32_t sendTime, int64_t fromGroup, int64_t fromQQ, const char *msg, const char *responseFlag) {
 	int LEN;
 	LEN = strlen(msg);
-	if (LEN <= 4 && fromGroup == 789434274) {
-		CQ_setGroupAddRequestV2(ac, responseFlag, REQUEST_GROUPADD, REQUEST_DENY,"ç­”æ¡ˆå­—æ•°ä¸å¤Ÿ");
-		CQ_sendGroupMsg(ac, 772753419, "å·²æ‹’ç»æ­¤äººåŠ ç¾¤ï¼Œç†ç”±ï¼šå­—ç¬¦å‚æ•°ä¸å¤Ÿï¼Œè¿”å›å€¼ä¸ºfalse");
-		LEN = -1;
-		return EVENT_BLOCK;
+	if (fromGroup == 789434274) {
+		if (LEN <= 5) {
+			CQ_setGroupAddRequestV2(ac, responseFlag, REQUEST_GROUPADD, REQUEST_DENY, "");
+			LEN = -1;
+			return EVENT_BLOCK;
+		}
+		else {
+			return EVENT_IGNORE;
+		}
 	}
+
 	if (fromGroup == 414752793) {
 		CQ_setGroupAddRequestV2(ac, responseFlag, REQUEST_GROUPADD, REQUEST_ALLOW, "");
 		return EVENT_BLOCK;
@@ -152,54 +185,62 @@ CQEVENT(int32_t, __eventSystem_GroupMemberIncrease, 32)(int32_t subType, int32_t
 	
 	if (fromGroup == 982711563) {
 		int pik;
-		pik = random(4);
+		pik = random(8);
 		
 		switch (pik) {
 			case 1: {
-				CQ_sendGroupMsg(ac, fromGroup, "æ¬¢è¿åŠ å…¥cocomiç‹å›½ï¼ DDå¼€å§‹æœ‰ä¸åˆ†è£‚äº†ã€‚");
+				CQ_sendGroupMsg(ac, fromGroup, "»¶Ó­½øÈº£¬ DD¿ªÊ¼ÓĞË¿·ÖÁÑÁË¡£");
 				break;
 			}
-				
-			case 2: {
-				CQ_sendGroupMsg(ac, fromGroup, "æ¬¢è¿åŠ å…¥cocomiç‹å›½ï¼ DDæ–©é¦–ã€‚");
-				break;
-			}
+					//2 has deleted.
 
 			case 3: {
-				CQ_sendGroupMsg(ac, fromGroup,"æ¬¢è¿åŠ å…¥cocomiç‹å›½ï¼Œæƒ³ç©éŸ³æ¸¸è¯·è¿›414752793");
+				CQ_sendGroupMsg(ac, fromGroup, "»¶Ó­¼ÓÈë£¬ÍæÒôÓÎÇë¼Ó414752793");
 				break;
-			
+			}
+			case 4: {
+				CQ_sendGroupMsg(ac, fromGroup, "šgÓ­¼ÓÈë£¬ ÍæMCÕˆ¼Ó765455518");
+				break;
+			}
+			case 5: {
+				CQ_sendGroupMsg(ac, fromGroup, "ÈËÉÙµÄÈºÔÚ¸ô±Ú£¬764640926");
+				break;
+			}
+			case 6: {
+				CQ_sendGroupMsg(ac, fromGroup, "»¶Ó­ÈëÈº£¬ÏëÒª²ÎÓë¿¾ÈâÇë¼ÓÈë843096717");
+				break;
+			}
+			case 7: {
+				CQ_sendGroupMsg(ac, fromGroup, "»¶Ó­¼ÓÈë£¡Ö÷ÈË½ñÌì×¼±¸VTB³öµÀÁËÂğ");
+				break;
 			}
 			default: {
-				CQ_sendGroupMsg(ac, fromGroup, "æ¬¢è¿åŠ å…¥cocomiç‹å›½ï¼ é»„è€æ¿ä»Šå¤©å¥³è£…äº†å—");
+				CQ_sendGroupMsg(ac, fromGroup, "»¶Ó­¼ÓÈëcocomiÍõ¹ú£¡ »ÆÀÏ°å½ñÌìÅ®×°ÁËÂğ");
 			}
-
 		}
 		return EVENT_BLOCK;
 		
 	}
-	if (fromGroup == 495093070) {
-		CQ_sendGroupMsg(ac, 495093070, "æˆ‘ä¹Ÿä¸çŸ¥é“è¿™ä¸ªç¾¤æ˜¯å¹²å˜›çš„ï¼Œæ€»ä¹‹æ¬¢è¿ä½ çš„åŠ å…¥ï¼Œæƒ³ç©éŸ³æ¸¸è¯·è¿›414752793");
-		return EVENT_BLOCK;
-	}
 	if (fromGroup == 414752793)
 	{
-		CQ_sendGroupMsg(ac, 414752793, "æ¬¢è¿æ¥åˆ°inkCakeçš„åå®«ï¼ˆå¤§é›¾ï¼‰");
-		//CQ_sendGroupMsg(ac, 414752793, "ä¸»äººä½ ä¸ªå˜æ€ï¼ˆè¶…å¤§å£°ï¼ï¼‰");
+		CQ_sendGroupMsg(ac, 414752793, "»¶Ó­À´µ½inkCakeµÄºó¹¬£¨´óÎí£©");
+		//CQ_sendGroupMsg(ac, 414752793, "Ö÷ÈËÄã¸ö±äÌ¬£¨³¬´óÉù£¡£©");
 		return EVENT_BLOCK;
 	}
 	if (fromGroup == 789434274) {
-		CQ_sendGroupMsg(ac, 789434274, "æ¬¢è¿åŠ å…¥äºŒåˆºèˆï¼ˆé›¾ï¼‰ç™¾åˆæ§èšé›†äº¤æµåœ°ï¼Œåœ¨è¿™é‡Œä½ ç”šè‡³å¯ä»¥è®¨è®ºå„ç§ç™¾åˆä½œå“ï¼ˆå¤§é›¾ï¼‰ã€‚è¿›ç¾¤åè¯·çœ‹å…¬å‘Šç¾¤è§„w");
+
+		CQ_sendGroupMsg(ac, 789434274, "»¶Ó­¼ÓÈë¶ş´Ìó¢£¨Îí£©°ÙºÏ¿Ø¾Û¼¯½»Á÷µØ£¬ÔÚÕâÀïÄãÉõÖÁ¿ÉÒÔÌÖÂÛ¸÷ÖÖ°ÙºÏ×÷Æ·£¨´óÎí£©¡£½øÈººóÇë¿´¹«¸æÈº¹æw");
 		return EVENT_BLOCK;
 	}
 	
 	
-	return EVENT_IGNORE; //å…³äºè¿”å›å€¼è¯´æ˜, è§â€œ_eventPrivateMsgâ€å‡½æ•°
+	return EVENT_IGNORE; //¹ØÓÚ·µ»ØÖµËµÃ÷, ¼û¡°_eventPrivateMsg¡±º¯Êı
 }
 
 CQEVENT(int32_t, __eventSystem_GroupMemberDecrease, 32)(int32_t subType, int32_t sendTime, int64_t fromGroup, int64_t fromQQ, int64_t beingOperateQQ) {
-	CQ_sendGroupMsg(ac, fromGroup, "æœ¬ç¾¤æ¶ˆå¤±äººå£+1");
+	const char *p = {""};
+	CQ_sendGroupMsg(ac, fromGroup, "±¾ÈºÏûÊ§ÈË¿Ú+1");
 
 
-	return EVENT_BLOCK; //å…³äºè¿”å›å€¼è¯´æ˜, è§â€œ_eventPrivateMsgâ€å‡½æ•°
+	return EVENT_BLOCK; //¹ØÓÚ·µ»ØÖµËµÃ÷, ¼û¡°_eventPrivateMsg¡±º¯Êı
 }
