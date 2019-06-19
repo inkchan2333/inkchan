@@ -41,31 +41,78 @@ void GroupMsgSub::threadMain()
 				 
 			}
 			else if (msg.msg == "摸摸小蛋糕") {
-				int pickT = -114514;
-				pickT = random(5);
 				
-				switch (pickT){
-				case 1:
-				{
-					CQ_sendGroupMsg(ac, msg.fromGroup, "不给摸，都给我去揉光小桐喵的脑袋"); break;
-				}
-				case 2:
-				{
-					CQ_sendGroupMsg(ac, msg.fromGroup, "痒死了，wwwwwwww"); break;
-				}
-				case 3:
-				{
-					CQ_sendGroupMsg(ac, msg.fromGroup, "摸我干啥，让黄老板女装啊！"); break;
-				}
-				case 4:
-				{
-					CQ_sendGroupMsg(ac, msg.fromGroup, "摸我干啥，让糕姐快点vtb出道啊。"); break;
-				}
-					default: {
-						CQ_sendDiscussMsg(ac, msg.fromGroup, "晕了晕了，太用力了啦傻逼。");
+				if (msg.fromGroup == 982711563) {
+					int pickT = -114514;
+					pickT = random(7);
+
+					switch (pickT) {
+						case 1:
+						{
+							CQ_sendGroupMsg(ac, msg.fromGroup, "不给摸，都给我去揉光小桐喵的脑袋"); break;
+						}
+						case 2:
+						{
+							CQ_sendGroupMsg(ac, msg.fromGroup, "痒死了，wwwwwwww"); break;
+						}
+						case 3:
+						{
+							CQ_sendGroupMsg(ac, msg.fromGroup, "[CQ:image,file=shiori7.jpg]"); break;
+						}
+						case 4:
+						{
+							CQ_sendGroupMsg(ac, msg.fromGroup, "摸我干啥，让糕姐快点vtb出道啊。"); break;
+						}
+						case 5:
+						{
+							CQ_sendGroupMsg(ac, msg.fromGroup, "不给摸，滚，恶心死了"); break;
+
+						}
+						case 6:
+						{
+							CQ_sendGroupMsg(ac, msg.fromGroup, "变态，才不理你"); break;
+
+						}
+						default: {
+							CQ_sendGroupMsg(ac, msg.fromGroup, "晕了晕了，太用力了啦傻逼。");
+						}
+
 					}
-				
+
+
+
 				}
+				else {
+					int pickT = random(6);
+					
+					switch (pickT)
+					{
+						case 1:
+						{
+							CQ_sendGroupMsg(ac, msg.fromGroup, "痒死了，wwwwwwww"); break;
+						}
+						case 2:
+						{
+							CQ_sendGroupMsg(ac, msg.fromGroup, "晕了晕了，太用力了啦傻逼。"); break;
+						}
+						case 3:
+						{
+							CQ_sendGroupMsg(ac, msg.fromGroup, "Exception:...骗你的，没出错，但你摸多了我就会炸毛"); break;
+						}
+						case 4:
+						{
+							CQ_sendGroupMsg(ac, msg.fromGroup, "变态，才不理你"); break;
+						}
+						default:
+						{
+							CQ_sendGroupMsg(ac, msg.fromGroup, "不给摸，滚，恶心死了");
+						}
+					}
+					
+					
+
+				}
+				
 			}
 			else if (msg.msg == "小蛋糕" && msg.fromQQ == 982957484) {
 				CQ_sendGroupMsg(ac, msg.fromGroup, "变态，才不理你");

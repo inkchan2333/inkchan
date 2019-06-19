@@ -114,15 +114,53 @@ CQEVENT(int32_t, __eventPrivateMsg, 24)(int32_t subType, int32_t msgId, int64_t 
 */
 CQEVENT(int32_t, __eventGroupMsg, 36)(int32_t subType, int32_t msgId, int64_t fromGroup, int64_t fromQQ, const char *fromAnonymous, const char *msg, int32_t font) {
 	bool responseFlag_AT = false;
-	
-	if (inkSE_searchAT_bot(msg) && fromQQ == 982957484) {
+	if (inkSE_searchAT_bot(msg) == true && inkSE_authCode_mon(msg) == false) {
+		int pickImage = -114514;
+		pickImage = random(6);
+		
+		switch (pickImage) {
+			case 1:
+			{
+				CQ_sendGroupMsg(ac, fromGroup, "[CQ:image,file=shiori_1.jpg]");
+				break;
 
-		if (inkSE_authCode_mon(msg) == false) {
-			CQ_sendGroupMsg(ac, fromGroup, "无法识别AC码");
+			}
+			case 2:
+			{
+				CQ_sendGroupMsg(ac, fromGroup, "[CQ:image,file=qua_1.jpg]");
+				break;
+
+			}
+			case 3:
+			{
+				CQ_sendGroupMsg(ac, fromGroup, "[CQ:image,file=serena_1.jpg]");
+				break;
+
+			}
+			case 4:
+			{
+				CQ_sendGroupMsg(ac, fromGroup, "[CQ:image,file=1.jpg]");
+				break;
+
+			}
+			case 5: {
+				CQ_sendGroupMsg(ac, fromGroup, "[CQ:image,file=shiori0.jpg]");
+				break;
+			}
+			default:{
+				CQ_sendGroupMsg(ac, fromGroup, "[CQ:image,file=shiori7.jpg]");
+			}
 
 		}
-		else if (inkSE_authCode_mon(msg) == true) {
-			CQ_sendGroupMsg(ac, fromGroup, "AC代码已确认，正在备份服务器...(仅用于测试，不会真的执行)");
+
+
+
+	}
+	else 
+	if (inkSE_searchAT_bot(msg) && fromQQ == 982957484) {
+
+		if (inkSE_authCode_mon(msg) == true) {
+			CQ_sendGroupMsg(ac, fromGroup, "[CQ:at,qq=982957484]AC代码已确认，请傻逼主人为自己写下的命令负责；正在备份服务器...(仅用于测试，不会真的执行)");
 			/*
 
 
@@ -130,10 +168,28 @@ CQEVENT(int32_t, __eventGroupMsg, 36)(int32_t subType, int32_t msgId, int64_t fr
 			CQ_sendGroupMsg(ac, fromGroup, "已强制关闭服务器。(仅用于测试，不会真的执行)");
 
 		}
+		else 
+		if (inkSE_authCode_restartMsgSub(msg) == true) {
+			CQ_sendGroupMsg(ac, fromGroup, "[CQ:at,qq=982957484] AC码已确认，请脑残主人为自己写下的命令负责。");
+			
+			/*if (groupMsgSub != nullptr)
+			{
+				groupMsgSub->quite();
+			}
+			groupMsgSub->start();
+			*/
+			//已知此处会导致bug
+			CQ_sendGroupMsg(ac, fromGroup, "已重启MsgSub线程，出错了一概不负责。");
+		}
+		else
+		if (inkSE_authCode_shutdownApp(msg) == true) {
+			 CQ_sendGroupMsg(ac, fromGroup, "你他妈脑残吧，自己都没写完。还想关掉我？？");
+		}
 
 		return EVENT_BLOCK;
 	}
 	
+
 	groupMsgSub->pushMsg(msgId, fromGroup, fromQQ, msg);//抛入消息
 	
 	return EVENT_IGNORE; //关于返回值说明, 见“_eventPrivateMsg”函数
