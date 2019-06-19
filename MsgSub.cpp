@@ -2,6 +2,7 @@
 #include "cqp.h"
 #include<stdio.h>
 #include<stdlib.h>
+#include <ctime>
 #define random(x) (rand()%x)
 
 #include <string.h>
@@ -43,7 +44,8 @@ void GroupMsgSub::threadMain()
 			else if (msg.msg == "摸摸小蛋糕") {
 				
 				if (msg.fromGroup == 982711563) {
-					int pickT = -114514;
+					int pickT = 0;
+					srand(time(0));
 					pickT = random(7);
 
 					switch (pickT) {
@@ -83,6 +85,7 @@ void GroupMsgSub::threadMain()
 
 				}
 				else {
+					srand(time(0));
 					int pickT = random(6);
 					
 					switch (pickT)
@@ -128,7 +131,8 @@ void GroupMsgSub::threadMain()
 			
 				CQ_sendGroupMsg(ac, msg.fromGroup, "让群主快点把列表给我，自己找我哪有那个本事");
 
-			/*int pick = 0;
+			/*int pick = 0
+			srand(time(0));;
 			pick = random(10);
 			switch (pick) {
 				case 1:{
@@ -212,6 +216,7 @@ void GroupMsgSub::threadMain()
 				}
 				else if (msg.msg == "迫害黄老板") {
 					int PICKS;
+					srand(time(0));
 					PICKS = random(4);
 
 					switch (PICKS){

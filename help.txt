@@ -1,0 +1,4 @@
+https://osu.ppy.sh/api/get_beatmaps/
+
+osu.ppy.sh/api/需求名&参数名1=参数&参数名2=参数&........
+osu.ppy.sh/api/get_beatmaps&u=xxx&k=xxxxxxx&xx=xxxxx

@@ -11,10 +11,10 @@
 #include "appmain.h" //应用AppID等信息，请正确填写，否则酷Q可能无法加载
 #include "MsgSub.h"
 #include "TransactionManagement.h"
-#include<stdio.h>
-#include<stdlib.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include "InkSE.h"
-
+#include <ctime>
 
 #define random(x) (rand()%x)
 using namespace std;
@@ -115,8 +115,10 @@ CQEVENT(int32_t, __eventPrivateMsg, 24)(int32_t subType, int32_t msgId, int64_t 
 CQEVENT(int32_t, __eventGroupMsg, 36)(int32_t subType, int32_t msgId, int64_t fromGroup, int64_t fromQQ, const char *fromAnonymous, const char *msg, int32_t font) {
 	bool responseFlag_AT = false;
 	if (inkSE_searchAT_bot(msg) == true && inkSE_authCode_mon(msg) == false) {
-		int pickImage = -114514;
-		pickImage = random(6);
+		long long pickImage = 0;
+
+		srand(time(0));
+		pickImage = (rand()%7);
 		
 		switch (pickImage) {
 			case 1:
@@ -241,6 +243,7 @@ CQEVENT(int32_t, __eventSystem_GroupMemberIncrease, 32)(int32_t subType, int32_t
 	
 	if (fromGroup == 982711563) {
 		int pik;
+		srand(time(0));
 		pik = random(8);
 		
 		switch (pik) {
