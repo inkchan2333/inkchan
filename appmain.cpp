@@ -1,3 +1,4 @@
+#pragma once
 /*
 * CoolQ Demo for VC++ 
 * Api Version 9
@@ -13,7 +14,6 @@
 #include "TransactionManagement.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include "InkSE.h"
 #include <ctime>
 
 #define random(x) (rand()%x)
@@ -25,6 +25,196 @@ bool enabled = false;
 
 GroupMsgSub * groupMsgSub = TransactionManagement::getInstance()->getGroupMsgSubInstance();
 
+/*
+
+
+*/
+bool inkSE_seekXiaoTongMiao(const char *msg, int64_t fromQQ) {
+	if (fromQQ != 3020019848) {
+		return false;
+	}
+	for (int TIP = 0; TIP < strlen(msg); TIP++) {
+		if ('D' == msg[TIP] && 'D' == msg[TIP + 1]) {
+			return true;
+		}
+		else return false;
+	}
+
+
+
+}
+
+//#递归暴力搜索算法
+//#用于检测AC码是否为19198(10)，实现功能为切换MsgSub启用/关闭
+//*const char *msg ——消息内容
+//
+bool inkSE_authCode_toggleMsgSub(const char *msg) {
+	bool flag1 = false;
+	bool flag2 = false;
+
+	for (int TIP = 0; TIP < strlen(msg); TIP++) {
+
+		if ('A' == msg[TIP])
+			if ('C' == msg[TIP + 1])
+				if ('=' == msg[TIP + 2]) {
+					flag1 = true;
+				}
+
+		if ('1' == msg[TIP])
+			if ('9' == msg[TIP + 1])
+				if ('1' == msg[TIP + 2])
+					if ('9' == msg[TIP + 3])
+						if ('8' == msg[TIP + 4])
+							if ('1' == msg[TIP + 5])
+							{
+								flag2 = true;
+							}
+
+
+
+	}
+
+	if (flag1 == true && flag2 == true) {
+		flag1 = false;
+		flag2 = false;
+
+		return true;
+	}
+	else
+		return false;
+
+
+
+}
+
+
+bool inkSE_authCode_shutdownApp(const char *msg) {
+	bool flag1 = false;
+	bool flag2 = false;
+
+	for (int TIP = 0; TIP < strlen(msg); TIP++) {
+
+		if ('A' == msg[TIP])
+			if ('C' == msg[TIP + 1])
+				if ('=' == msg[TIP + 2]) {
+					flag1 = true;
+				}
+
+		if ('s' == msg[TIP])
+			if ('u' == msg[TIP + 1])
+				if ('d' == msg[TIP + 2])
+					if ('o' == msg[TIP + 3])
+						if ('r' == msg[TIP + 5])
+							if ('m' == msg[TIP + 6])
+							{
+								flag2 = true;
+							}
+
+
+
+	}
+
+	if (flag1 == true && flag2 == true) {
+		flag1 = false;
+		flag2 = false;
+
+		return true;
+	}
+	else
+		return false;
+
+
+
+}
+
+bool inkSE_authCode_mon(const char *msg) {
+	bool flag1 = false;
+	bool flag2 = false;
+
+	for (int TIP = 0; TIP < strlen(msg); TIP++) {
+
+		if ('A' == msg[TIP])
+			if ('C' == msg[TIP + 1])
+				if ('=' == msg[TIP + 2]) {
+					flag1 = true;
+				}
+
+		if ('1' == msg[TIP])
+			if ('1' == msg[TIP + 1])
+				if ('4' == msg[TIP + 2])
+					if ('5' == msg[TIP + 3])
+						if ('1' == msg[TIP + 4])
+							if ('4' == msg[TIP + 5])
+							{
+								flag2 = true;
+							}
+
+
+
+	}
+
+	if (flag1 == true && flag2 == true) {
+		flag1 = false;
+		flag2 = false;
+
+		return true;
+	}
+	else
+		return false;
+
+
+
+}
+
+bool inkSE_searchAT_bot(const char *msg) {
+	bool flag1 = false;
+	bool flag2 = false;
+
+	for (int TIP = 0; TIP <= strlen(msg); TIP++) {
+
+		//First Layer
+		if ('C' == msg[TIP]) {
+			if ('Q' == msg[TIP + 1]) {
+				flag1 = true;
+			}
+		}
+
+
+		//Second Layer
+		if (flag1 == true) {
+			if ('3' == msg[TIP]) {
+				if ('2' == msg[TIP + 1]) {
+					if ('0' == msg[TIP + 2]) {
+						if ('6' == msg[TIP + 3]) {
+							flag2 = true;
+						}
+					}
+				}
+			}
+
+		}
+
+
+	}
+
+	if (flag1 == true && flag2 == true) {
+		flag1 = false;
+		flag2 = false;
+
+		return true;
+	}
+	else
+		return false;
+}
+
+
+
+
+/*
+
+
+
+*/
 
 
 
@@ -113,8 +303,39 @@ CQEVENT(int32_t, __eventPrivateMsg, 24)(int32_t subType, int32_t msgId, int64_t 
 * Type=2 群消息
 */
 CQEVENT(int32_t, __eventGroupMsg, 36)(int32_t subType, int32_t msgId, int64_t fromGroup, int64_t fromQQ, const char *fromAnonymous, const char *msg, int32_t font) {
-	bool responseFlag_AT = false;
-	if (inkSE_searchAT_bot(msg) == true && inkSE_authCode_mon(msg) == false) {
+	
+
+	if (fromQQ == 3020019848) {
+		int Pick2;
+		srand(time(NULL));
+		Pick2 = random(2);
+		if (Pick2 == 1){
+			if (msg == "摸头会长不高的喵！") {
+				CQ_sendGroupMsg(ac, fromGroup, "[CQ:at,qq=3020019848]没事，长不高才可爱，我来娶你。");
+				return EVENT_BLOCK;
+			}
+			else if (msg == "别乱摸啦喵！……") {
+				CQ_sendGroupMsg(ac, fromGroup, "[CQ:at,qq=3020019848] 我也要摸摸你，");
+				return EVENT_BLOCK;
+			}
+			else if (msg == "摸头会长不高的喵！") {
+				CQ_sendGroupMsg(ac, fromGroup, "[CQ:at,qq=3020019848] 别摸小桐喵！有事冲我来！");
+				return EVENT_BLOCK;
+			}
+			else if (msg == "别乱摸喵，恶心喵！") {
+				CQ_sendGroupMsg(ac, fromGroup, "[CQ:at,qq=3020019848] 被老婆讨厌了，呜呜呜");
+				return EVENT_BLOCK;
+			}
+
+			else return EVENT_IGNORE;
+		}
+	}
+	if (inkSE_seekXiaoTongMiao(msg, fromQQ)) {
+		CQ_sendGroupMsg(ac, fromGroup, "[CQ:at,qq=3020019848] 虽然你的主人是DD，你爱我吗？");
+		return EVENT_BLOCK;
+	}
+
+	if (inkSE_searchAT_bot(msg) == true) {
 		long long pickImage = 0;
 
 		srand(time(0));
@@ -155,10 +376,11 @@ CQEVENT(int32_t, __eventGroupMsg, 36)(int32_t subType, int32_t msgId, int64_t fr
 
 		}
 
-
+		return EVENT_BLOCK;
 
 	}
-	else 
+
+	//AC code from me;
 	if (inkSE_searchAT_bot(msg) && fromQQ == 982957484) {
 
 		if (inkSE_authCode_mon(msg) == true) {
@@ -168,27 +390,13 @@ CQEVENT(int32_t, __eventGroupMsg, 36)(int32_t subType, int32_t msgId, int64_t fr
 
 			*/
 			CQ_sendGroupMsg(ac, fromGroup, "已强制关闭服务器。(仅用于测试，不会真的执行)");
+			return EVENT_BLOCK;
 
 		}
-		else 
-		if (inkSE_authCode_restartMsgSub(msg) == true) {
-			CQ_sendGroupMsg(ac, fromGroup, "[CQ:at,qq=982957484] AC码已确认，请脑残主人为自己写下的命令负责。");
-			
-			/*if (groupMsgSub != nullptr)
-			{
-				groupMsgSub->quite();
-			}
-			groupMsgSub->start();
-			*/
-			//已知此处会导致bug
-			CQ_sendGroupMsg(ac, fromGroup, "已重启MsgSub线程，出错了一概不负责。");
+		else if (inkSE_authCode_shutdownApp(msg) == true) {
+			 CQ_sendGroupMsg(ac, fromGroup, "[CQ:at,qq=982957484] 你他妈脑残吧，自己都没写完。还想关掉我？？");
+			 return EVENT_BLOCK;
 		}
-		else
-		if (inkSE_authCode_shutdownApp(msg) == true) {
-			 CQ_sendGroupMsg(ac, fromGroup, "你他妈脑残吧，自己都没写完。还想关掉我？？");
-		}
-
-		return EVENT_BLOCK;
 	}
 	
 
@@ -244,37 +452,31 @@ CQEVENT(int32_t, __eventSystem_GroupMemberIncrease, 32)(int32_t subType, int32_t
 	if (fromGroup == 982711563) {
 		int pik;
 		srand(time(0));
-		pik = random(8);
+		pik = random(7);
 		
 		switch (pik) {
 			case 1: {
 				CQ_sendGroupMsg(ac, fromGroup, "欢迎进群， DD开始有丝分裂了。");
 				break;
 			}
-					//2 has deleted.
-
-			case 3: {
+			case 2: {
 				CQ_sendGroupMsg(ac, fromGroup, "欢迎加入，玩音游请加414752793");
 				break;
 			}
-			case 4: {
+			case 3: {
 				CQ_sendGroupMsg(ac, fromGroup, "歡迎加入， 玩MC請加765455518");
 				break;
 			}
+			case 4: {
+				CQ_sendGroupMsg(ac, fromGroup, "人少的群在隔壁，群号764640926");
+				break;
+			}
 			case 5: {
-				CQ_sendGroupMsg(ac, fromGroup, "人少的群在隔壁，764640926");
-				break;
-			}
-			case 6: {
-				CQ_sendGroupMsg(ac, fromGroup, "欢迎入群，想要参与烤肉请加入843096717");
-				break;
-			}
-			case 7: {
-				CQ_sendGroupMsg(ac, fromGroup, "欢迎加入！主人今天准备VTB出道了吗");
+				CQ_sendGroupMsg(ac, fromGroup, "欢迎入群，想要建设cocomi王国(MC)加群765455518");
 				break;
 			}
 			default: {
-				CQ_sendGroupMsg(ac, fromGroup, "欢迎加入cocomi王国！ 黄老板今天女装了吗");
+				CQ_sendGroupMsg(ac, fromGroup, "欢迎入群，想要参与烤肉请加入843096717");
 			}
 		}
 		return EVENT_BLOCK;
@@ -297,7 +499,6 @@ CQEVENT(int32_t, __eventSystem_GroupMemberIncrease, 32)(int32_t subType, int32_t
 }
 
 CQEVENT(int32_t, __eventSystem_GroupMemberDecrease, 32)(int32_t subType, int32_t sendTime, int64_t fromGroup, int64_t fromQQ, int64_t beingOperateQQ) {
-	const char *p = {""};
 	CQ_sendGroupMsg(ac, fromGroup, "本群消失人口+1");
 
 

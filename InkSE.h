@@ -2,11 +2,35 @@
 #include <iostream>
 #include <cstring>
 #include <stdio.h>
+#include <stdint.h>
 using namespace std;
 
-//const long long AuthCode_InkCake = 114514;
 
-bool inkSE_authCode_restartMsgSub(const char *msg) {
+//#使用String迭代器
+//#用于检测AC码是否为1919810，实现为切换MsgSub启用/关闭
+//*string msg —— 消息内容
+//
+
+bool inkSE_seekXiaoTongMiao(const char *msg,int64_t fromQQ) {
+	if (fromQQ != 3020019848) {
+		return false;
+	}
+	for (int TIP = 0; TIP < strlen(msg); TIP++) {
+		if ('D' == msg[TIP] && 'D' == msg[TIP+1]) {
+			return true;
+		}
+		else return false;
+	}
+
+
+
+}
+
+//#递归暴力搜索算法
+//#用于检测AC码是否为19198(10)，实现功能为切换MsgSub启用/关闭
+//*const char *msg ——消息内容
+//
+bool inkSE_authCode_toggleMsgSub(const char *msg) {
 	bool flag1 = false;
 	bool flag2 = false;
 
@@ -97,7 +121,7 @@ bool inkSE_authCode_mon(const char *msg) {
 					flag1 = true;
 				}
 
-		if('1' == msg[TIP])
+		if ('1' == msg[TIP])
 		if ('1' == msg[TIP + 1])
 		if ('4' == msg[TIP + 2])
 		if ('5' == msg[TIP + 3])

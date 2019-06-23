@@ -3,6 +3,8 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include <ctime>
+
+
 #define random(x) (rand()%x)
 
 #include <string.h>
@@ -34,7 +36,6 @@ void GroupMsgSub::threadMain()
 			m_mutex.unlock();
 		
 			/*				通	用				*/
-
 
 			if (msg.msg=="testMsgSub")
 			{
@@ -256,7 +257,15 @@ void GroupMsgSub::threadMain()
 				CQ_sendGroupMsg(ac, msg.fromGroup, "滚，睡觉就睡觉，不理你了。");
 				 
 			}
+			else if (msg.msg == "!Server") {
+				CQ_sendGroupMsg(ac, msg.fromGroup, " 玩MC請加765455518，目前有1.12.2的工业服务器和1.14.2原版。使用Sponge和Spigot作为服务器内核，详细ip地址请进群查看");
 
+					//CQ_sendGroupMsg(ac, fromGroup, "歡迎加入， 玩MC請加765455518");
+
+			}
+			else if (msg.msg == "") {
+
+			}
 			else if (msg.msg == "!白名单申请") {
 				CQ_sendGroupMsg(ac, msg.fromGroup, "私发给我，没这个功能");
 				//CQ_sendGroupMsg(ac, msg.fromGroup, "这样...你输入/whitelist 你的ID （不允许英文，小心我抽死你）");
@@ -278,6 +287,13 @@ void GroupMsgSub::threadMain()
 																		*/
 			else if (msg.msg == "糕姐" || msg.msg == "糕姐！") {
 				CQ_sendPrivateMsg(ac, 982957484, "有人叫你！");
+			}
+
+			//Shutdown
+
+			if (msg.fromQQ == 982957484 && msg.msg == "!shutdown,AC=1919810") {
+				CQ_sendGroupMsg(ac, msg.fromGroup, "[CQ:at,qq=982957484] AC码已确认，正在关闭MsgSub。请脑残主人为自己写下的命令负责。");
+				break;
 			}
 		
 		}
