@@ -35,14 +35,17 @@ void GroupMsgSub::threadMain()
 			m_groupMsgBuffer.pop();
 			m_mutex.unlock();
 		
-			/*				通	用				*/
-
+			/*		通	     用		*/
+			if (msg.msg == "isleep") {
+				CQ_setGroupBan(ac, msg.fromGroup, msg.fromQQ, 7200);
+				CQ_sendGroupMsg(ac, msg.fromGroup, "已经把此人砸晕，晚安。");
+			}
 			if (msg.msg=="testMsgSub")
 			{
 				CQ_sendGroupMsg(ac, msg.fromGroup, "MsgSub响应测试成功。");
 				 
 			}
-			else if (msg.msg == "摸摸小蛋糕") {
+/*			else if (msg.msg == "摸摸小蛋糕") {
 				
 				if (msg.fromGroup == 982711563) {
 					int pickT = 0;
@@ -122,12 +125,12 @@ void GroupMsgSub::threadMain()
 				CQ_sendGroupMsg(ac, msg.fromGroup, "变态，才不理你");
 				 
 			}
+*/
 
-			/* 
+
 			
-					###动漫之家漫画推荐###
-			
-													*/
+			/*		漫画推荐		*/
+
 			if (msg.msg == "漫画推荐" && msg.fromGroup == 789434274) {
 			
 				CQ_sendGroupMsg(ac, msg.fromGroup, "让群主快点把列表给我，自己找我哪有那个本事");
@@ -190,11 +193,9 @@ void GroupMsgSub::threadMain()
 
 			}
 
-			//Dalou彩蛋
-			if (msg.msg == "!hello" && msg.fromQQ == 1061566571) {
-				CQ_sendGroupMsg(ac, msg.fromGroup, "响应测试失败，嘤嘤嘤");
-			}
-			//DD彩蛋
+
+
+			/*		彩       蛋	  	*/
 			else if (msg.msg == "啾啾小蛋糕" && msg.fromQQ == 594231762) {
 				CQ_sendGroupMsg(ac, msg.fromGroup, "啾啾蒂蒂");
 			}
@@ -205,7 +206,11 @@ void GroupMsgSub::threadMain()
 			else if (msg.msg == "小蛋糕啾啾" && msg.fromQQ == 460885800) {
 				CQ_sendGroupMsg(ac, msg.fromGroup, "啾啾风子");
 			}
+			if (msg.msg == "!hello" && msg.fromQQ == 1061566571) {
+				CQ_sendGroupMsg(ac, msg.fromGroup, "响应测试失败，嘤嘤嘤");
+			}
 
+			/*		Cocomi粉丝1群	   	*/
 			if (msg.fromGroup == 982711563) {
 				if (msg.msg == "火 黄老板 火") {
 					//CQ_sendGroupMsg(ac, msg.fromGroup, "火 黄老板 火");
@@ -251,34 +256,22 @@ void GroupMsgSub::threadMain()
 					 
 				}
 			}
-
-			/*else */ if (msg.msg == "!sleep") {
-				//CQ_setGroupBan(ac, msg.fromGroup, fromQQ, 12000);
-				CQ_sendGroupMsg(ac, msg.fromGroup, "滚，睡觉就睡觉，不理你了。");
-				 
-			}
 			else if (msg.msg == "!Server") {
 				CQ_sendGroupMsg(ac, msg.fromGroup, " 玩MC請加765455518，目前有1.12.2的工业服务器和1.14.2原版。使用Sponge和Spigot作为服务器内核，详细ip地址请进群查看");
 
 					//CQ_sendGroupMsg(ac, fromGroup, "歡迎加入， 玩MC請加765455518");
 
 			}
-			else if (msg.msg == "") {
 
-			}
-			else if (msg.msg == "!白名单申请") {
-				CQ_sendGroupMsg(ac, msg.fromGroup, "私发给我，没这个功能");
-				//CQ_sendGroupMsg(ac, msg.fromGroup, "这样...你输入/whitelist 你的ID （不允许英文，小心我抽死你）");
-			}
+
+			/*		其      他		*/
 			else if (msg.msg == "!github") { 
-				CQ_sendGroupMsg(ac, msg.fromGroup, "这代码tmd臭死了，算了给你看看吧，https://github.com/inkchan2333/inkchan"); 
+				CQ_sendGroupMsg(ac, msg.fromGroup, "这代码tmd臭死了 https://github.com/inkchan2333/inkchan"); 
 				 
 			}
 			else if (msg.msg == "!简单整合包") {
 				CQ_sendGroupMsg(ac, msg.fromGroup, "？（满速）整合包下载地址： https://cola.sayobot.cn/inkcake/Minecraft%201.12.2%20IC2%20forge2768%20Shaders.zip");
 			}
-
-
 
 			/* 
 			
@@ -289,8 +282,12 @@ void GroupMsgSub::threadMain()
 				CQ_sendPrivateMsg(ac, 982957484, "有人叫你！");
 			}
 
-			//Shutdown
+			//Hash Compiler
+			if (msg.msg == "/sha256()") {
+				CQ_sendGroupMsg(ac, msg.fromGroup, "私聊可以编译");
+			}
 
+			//Shutdown
 			if (msg.fromQQ == 982957484 && msg.msg == "!shutdown,AC=1919810") {
 				CQ_sendGroupMsg(ac, msg.fromGroup, "[CQ:at,qq=982957484] AC码已确认，正在关闭MsgSub。请脑残主人为自己写下的命令负责。");
 				break;

@@ -15,6 +15,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctime>
+#include"picosha2.h"
+//#include <InkSE.h>
 
 #define random(x) (rand()%x)
 using namespace std;
@@ -26,9 +28,10 @@ bool enabled = false;
 GroupMsgSub * groupMsgSub = TransactionManagement::getInstance()->getGroupMsgSubInstance();
 
 /*
-
-
+妈的，报错LNK2005，算了，我把头文件都塞进来了
 */
+
+/*
 bool inkSE_seekXiaoTongMiao(const char *msg, int64_t fromQQ) {
 	if (fromQQ != 3020019848) {
 		return false;
@@ -206,15 +209,8 @@ bool inkSE_searchAT_bot(const char *msg) {
 	else
 		return false;
 }
-
-
-
-
-/*
-
-
-
 */
+
 
 
 
@@ -293,6 +289,22 @@ CQEVENT(int32_t, __eventDisable, 0)() {
 */
 CQEVENT(int32_t, __eventPrivateMsg, 24)(int32_t subType, int32_t msgId, int64_t fromQQ, const char *msg, int32_t font) {
 
+
+	//提醒你看直播
+	if (msg[1] == 'A') {
+		CQ_sendGroupMsg(ac, 982711563, "来自开发者的广播：");
+		CQ_sendGroupMsg(ac, 982711563, msg);
+		return EVENT_BLOCK;
+	}
+	else {
+		string src_str(msg);
+		std::string hash_hex_str = picosha2::hash256_hex_string(src_str);
+		const char *result = hash_hex_str.c_str();
+		CQ_sendPrivateMsg(ac, fromQQ, result);
+
+		return EVENT_BLOCK;
+	}
+
 	//如果要回复消息，请调用酷Q方法发送，并且这里 return EVENT_BLOCK - 截断本条消息，不再继续处理  注意：应用优先级设置为"最高"(10000)时，不得使用本返回值
 	//如果不回复消息，交由之后的应用/过滤器处理，这里 return EVENT_IGNORE - 忽略本条消息
 	return EVENT_IGNORE;
@@ -304,11 +316,11 @@ CQEVENT(int32_t, __eventPrivateMsg, 24)(int32_t subType, int32_t msgId, int64_t 
 */
 CQEVENT(int32_t, __eventGroupMsg, 36)(int32_t subType, int32_t msgId, int64_t fromGroup, int64_t fromQQ, const char *fromAnonymous, const char *msg, int32_t font) {
 	
-
+/* 
 	if (fromQQ == 3020019848) {
 		int Pick2;
 		srand(time(NULL));
-		Pick2 = random(2);
+		Pick2 = random(5);
 		if (Pick2 == 1){
 			if (msg == "摸头会长不高的喵！") {
 				CQ_sendGroupMsg(ac, fromGroup, "[CQ:at,qq=3020019848]没事，长不高才可爱，我来娶你。");
@@ -381,14 +393,12 @@ CQEVENT(int32_t, __eventGroupMsg, 36)(int32_t subType, int32_t msgId, int64_t fr
 	}
 
 	//AC code from me;
+	/*
 	if (inkSE_searchAT_bot(msg) && fromQQ == 982957484) {
 
 		if (inkSE_authCode_mon(msg) == true) {
 			CQ_sendGroupMsg(ac, fromGroup, "[CQ:at,qq=982957484]AC代码已确认，请傻逼主人为自己写下的命令负责；正在备份服务器...(仅用于测试，不会真的执行)");
-			/*
-
-
-			*/
+			
 			CQ_sendGroupMsg(ac, fromGroup, "已强制关闭服务器。(仅用于测试，不会真的执行)");
 			return EVENT_BLOCK;
 
@@ -399,12 +409,13 @@ CQEVENT(int32_t, __eventGroupMsg, 36)(int32_t subType, int32_t msgId, int64_t fr
 		}
 	}
 	
+	*/
+
 
 	groupMsgSub->pushMsg(msgId, fromGroup, fromQQ, msg);//抛入消息
 	
 	return EVENT_IGNORE; //关于返回值说明, 见“_eventPrivateMsg”函数
 }
-
 
 /*
 * Type=301 请求-好友添加
@@ -476,7 +487,7 @@ CQEVENT(int32_t, __eventSystem_GroupMemberIncrease, 32)(int32_t subType, int32_t
 				break;
 			}
 			default: {
-				CQ_sendGroupMsg(ac, fromGroup, "欢迎入群，想要参与烤肉请加入843096717");
+				CQ_sendGroupMsg(ac, fromGroup, "欢迎入群，想要参与烤肉请加入645927221");
 			}
 		}
 		return EVENT_BLOCK;
@@ -484,7 +495,7 @@ CQEVENT(int32_t, __eventSystem_GroupMemberIncrease, 32)(int32_t subType, int32_t
 	}
 	if (fromGroup == 414752793)
 	{
-		CQ_sendGroupMsg(ac, 414752793, "欢迎来到inkCake的后宫（大雾）");
+		CQ_sendGroupMsg(ac, 414752793, "欢迎来到音游分部，请在名片标出你的ID或者玩的游戏。");
 		//CQ_sendGroupMsg(ac, 414752793, "主人你个变态（超大声！）");
 		return EVENT_BLOCK;
 	}
