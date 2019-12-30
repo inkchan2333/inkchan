@@ -3,27 +3,20 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include <ctime>
+#include <Windows.h>
+#include <windows.data.json.h>
+#include <windows.web.h>
+#include <cstring>
 
+long long msg_delay = -114514;
+long long msg_delay_mofu = -114514;
 
 #define random(x) (rand()%x)
 
 #include <string.h>
 //导入全局变量 ac   在appmain.h 中定义
+
 extern int ac;
-
-/*struct Group {
-	//bool SeTsuFunction_Active;
-	//找不到色图！！色图功能没了！
-	
-	bool OsuGroup;
-	bool AnimeGroup;
-
-};*/
-
-/*bool OsuGroups(msg.fromGroup) {
-
-}
-*/
 void GroupMsgSub::threadMain()
 {
 	while (!m_quit)
@@ -34,265 +27,53 @@ void GroupMsgSub::threadMain()
 			GroupMsg msg = m_groupMsgBuffer.front();
 			m_groupMsgBuffer.pop();
 			m_mutex.unlock();
-		
-			/*		通	     用		*/
-			if (msg.msg == "isleep") {
-				CQ_setGroupBan(ac, msg.fromGroup, msg.fromQQ, 7200);
-				CQ_sendGroupMsg(ac, msg.fromGroup, "已经把此人砸晕，晚安。");
+			if (msg.msg == "!help mc") {
+				CQ_sendGroupMsg(ac, msg.fromGroup, "目前正在运行的是基于sponge的1.12.2原版生存和1.15.1基于spigot的创造服。ip地址分别为inkcake.sayobot.cn:25565和inkcake.sayobot.cn:23333");
 			}
-			if (msg.msg=="testMsgSub")
-			{
-				CQ_sendGroupMsg(ac, msg.fromGroup, "MsgSub响应测试成功。");
-				 
+			else if (msg.msg == "小蛋糕来点色图") {
+				CQ_sendGroupMsg(ac, msg.fromGroup, "吵你妈，不知道老子不能发图。");
 			}
-/*			else if (msg.msg == "摸摸小蛋糕") {
-				
-				if (msg.fromGroup == 982711563) {
-					int pickT = 0;
-					srand(time(0));
-					pickT = random(7);
-
-					switch (pickT) {
-						case 1:
-						{
-							CQ_sendGroupMsg(ac, msg.fromGroup, "不给摸，都给我去揉光小桐喵的脑袋"); break;
-						}
-						case 2:
-						{
-							CQ_sendGroupMsg(ac, msg.fromGroup, "痒死了，wwwwwwww"); break;
-						}
-						case 3:
-						{
-							CQ_sendGroupMsg(ac, msg.fromGroup, "[CQ:image,file=shiori7.jpg]"); break;
-						}
-						case 4:
-						{
-							CQ_sendGroupMsg(ac, msg.fromGroup, "摸我干啥，让糕姐快点vtb出道啊。"); break;
-						}
-						case 5:
-						{
-							CQ_sendGroupMsg(ac, msg.fromGroup, "不给摸，滚，恶心死了"); break;
-
-						}
-						case 6:
-						{
-							CQ_sendGroupMsg(ac, msg.fromGroup, "变态，才不理你"); break;
-
-						}
-						default: {
-							CQ_sendGroupMsg(ac, msg.fromGroup, "晕了晕了，太用力了啦傻逼。");
-						}
-
-					}
-
-
-
-				}
-				else {
-					srand(time(0));
-					int pickT = random(6);
-					
-					switch (pickT)
-					{
-						case 1:
-						{
-							CQ_sendGroupMsg(ac, msg.fromGroup, "痒死了，wwwwwwww"); break;
-						}
-						case 2:
-						{
-							CQ_sendGroupMsg(ac, msg.fromGroup, "晕了晕了，太用力了啦傻逼。"); break;
-						}
-						case 3:
-						{
-							CQ_sendGroupMsg(ac, msg.fromGroup, "Exception:...骗你的，没出错，但你摸多了我就会炸毛"); break;
-						}
-						case 4:
-						{
-							CQ_sendGroupMsg(ac, msg.fromGroup, "变态，才不理你"); break;
-						}
-						default:
-						{
-							CQ_sendGroupMsg(ac, msg.fromGroup, "不给摸，滚，恶心死了");
-						}
-					}
-					
-					
-
-				}
-				
+			else if (msg.msg == "!faq 血猫" || msg.msg == "血猫" || msg.msg == "site:血猫") {
+				CQ_sendGroupMsg(ac, msg.fromGroup, "用什么血猫，用小夜呀！https://osu.sayobot.cn");
 			}
-			else if (msg.msg == "小蛋糕" && msg.fromQQ == 982957484) {
-				CQ_sendGroupMsg(ac, msg.fromGroup, "变态，才不理你");
-				 
+			else if (msg.msg == "mc:prism" || msg.msg == "mc:查询") {
+				CQ_sendGroupMsg(ac, msg.fromGroup, "【棱镜】查询插件：https://www.mcbbs.net/thread-847818-1-1.html?tdsourcetag=s_pcqq_aiomsg （英文）https://forums.spongepowered.org/t/prism-official-thread-v3-0-beta/1137");
 			}
-*/
-
-
-			
-			/*		漫画推荐		*/
-
-			if (msg.msg == "漫画推荐" && msg.fromGroup == 789434274) {
-			
-				CQ_sendGroupMsg(ac, msg.fromGroup, "让群主快点把列表给我，自己找我哪有那个本事");
-
-			/*int pick = 0
-			srand(time(0));;
-			pick = random(10);
-			switch (pick) {
-				case 1:{
-					CQ_sendGroupMsg(ac, msg.fromGroup, "给你推荐的：《Girl Friends》\n 已完结");
-					CQ_sendGroupMsg(ac, msg.fromGroup, "(来自B漫)Address：https://manga.bilibili.com/m/detail/mc24791");
-					break;
-				}
-				case 2: {
-					CQ_sendGroupMsg(ac, msg.fromGroup, "给你推荐的：《惊爆草莓》，作者：公野樱子");
-					CQ_sendGroupMsg(ac, msg.fromGroup, "(来自动漫之家)Address：https://manhua.dmzj.com/jbcm/");
-					break;
-				}
-				case 3: {
-					CQ_sendGroupMsg(ac, msg.fromGroup, "给你推荐的：《圣母在上》，作者：长沢智");
-					CQ_sendGroupMsg(ac, msg.fromGroup, "(来自动漫之家)Address：https://manhua.dmzj.com/smzsmlydnw/");
-					break;
-				}
-				case 4: {
-					CQ_sendGroupMsg(ac, msg.fromGroup, "给你推荐的：《甜蜜X密友》，作者：桐原いづみ");
-					CQ_sendGroupMsg(ac, msg.fromGroup, "(来自动漫之家)Address：https://manhua.dmzj.com/tianmixmiyou/");
-					break;
-				}
-				case 5: {
-					CQ_sendGroupMsg(ac, msg.fromGroup, "给你推荐的：《初恋姐妹》\n 作者：东云水生");
-					CQ_sendGroupMsg(ac, msg.fromGroup, "(来自动漫之家)Address：https://manhua.dmzj.com/chulianjiemei/");
-					break;
-				}
-				case 6: {
-					CQ_sendGroupMsg(ac, msg.fromGroup, "给你推荐的：《月夜的奶酪》\n 作者：てぃんくる");
-					CQ_sendGroupMsg(ac, msg.fromGroup, "(来自动漫之家)Address：https://manhua.dmzj.com/yueyedenailao/");
-					break;
-				}
-				case 7: {
-					CQ_sendGroupMsg(ac, msg.fromGroup, "给你推荐的：《Happy Sugar Life》\N 作者：键空老贼NMSL");
-					CQ_sendGroupMsg(ac, msg.fromGroup, "Address：没有！自己去百度贴吧找资源！！！");
-					break;
-				}
-				case 8: {
-					CQ_sendGroupMsg(ac, msg.fromGroup, "给你推荐的：《轻声密语》\n 作者：池田学志");
-					CQ_sendGroupMsg(ac, msg.fromGroup, "(来自动漫之家)Address：https://manhua.dmzj.com/qingshengmiyu/");
-					break;
-				}
-				case 9: {
-					CQ_sendGroupMsg(ac, msg.fromGroup, "给你推荐的：《为了让学姐鼓起干劲，我决定献出我自己》\n 作者：佐仓吉太");
-					CQ_sendGroupMsg(ac, msg.fromGroup, "(来自B漫)Address：https://manga.bilibili.com/m/detail/mc25905");
-					break;
-				}
-				default:{
-					CQ_sendGroupMsg(ac, msg.fromGroup, "本Bot不想给你推荐任何漫画!!!");
-				
-				}
-				}
-				*/	
-
+			else if (msg.msg == "mc:latch" || msg.msg == "mc:保护") {
+				CQ_sendGroupMsg(ac, msg.fromGroup, "【latch】： https://www.mcbbs.net/thread-786357-1-1.html");
 			}
-
-
-
-			/*		彩       蛋	  	*/
-			else if (msg.msg == "啾啾小蛋糕" && msg.fromQQ == 594231762) {
-				CQ_sendGroupMsg(ac, msg.fromGroup, "啾啾蒂蒂");
+			else if (msg.msg == "mc:forge" || msg.msg == "mc:api") {
+				CQ_sendGroupMsg(ac, msg.fromGroup, "Forge是mc的一个模组api，几乎所有的mod都要通过forge桥接来使用。例如小地图，高清补丁（Optifine），官网 http://files.minecraftforge.net/");
 			}
-			else if (msg.msg == "迫害浅衍") {
-				CQ_sendGroupMsg(ac, msg.fromGroup, "龙 浅衍 龙");
-
+			else if (msg.msg == "mc:optifine" || msg.msg == "mc:高清补丁") {
+				CQ_sendGroupMsg(ac, msg.fromGroup, "【OptifineHD】又称为高清补丁，现在集成了光影（shaders）mod，前置API是forge https://optifine.net/downloads");
 			}
-			else if (msg.msg == "小蛋糕啾啾" && msg.fromQQ == 460885800) {
-				CQ_sendGroupMsg(ac, msg.fromGroup, "啾啾风子");
+			else if (msg.msg == "mc:register" || msg.msg == "mc:注册") {
+				CQ_sendGroupMsg(ac, msg.fromGroup, "/register （你的密码） （重复你的密码），请牢记密码，弱智糕姐不会读取数据库。");
 			}
-			if (msg.msg == "!hello" && msg.fromQQ == 1061566571) {
-				CQ_sendGroupMsg(ac, msg.fromGroup, "响应测试失败，嘤嘤嘤");
+			else if (msg.msg == "mc:gf" || msg.msg == "mc:领地") {
+				CQ_sendGroupMsg(ac, msg.fromGroup, "中文MCbbs: https://www.mcbbs.net/thread-711313-1-1.html 原地址：https://forums.spongepowered.org/t/griefprevention-official-thread-1-8-9-1-10-2-1-11/1123");
 			}
-
-			/*		Cocomi粉丝1群	   	*/
-			if (msg.fromGroup == 982711563) {
-				if (msg.msg == "火 黄老板 火") {
-					//CQ_sendGroupMsg(ac, msg.fromGroup, "火 黄老板 火");
-					 
-				}
-				else if (msg.msg == "酸 黄老板 酸") {
-					CQ_sendGroupMsg(ac, msg.fromGroup, "酸 黄老板 酸");
-					 
-				}
-				else if (msg.msg == "迫害黄老板") {
-					int PICKS;
-					srand(time(0));
-					PICKS = random(4);
-
-					switch (PICKS){
-					 case 1: {
-						CQ_sendGroupMsg(ac, msg.fromGroup, "女装  黄老板  女装");
-						break;
-					 }case 2: {
-						CQ_sendGroupMsg(ac, msg.fromGroup, "コウちゃん 女装！！");
-						break;
-					 }case 3: {
-						CQ_sendGroupMsg(ac, msg.fromGroup, "Kou酱~~~~女装！！");
-						break;
-
-					 }
-					 default:
-					 {
-						CQ_sendGroupMsg(ac, msg.fromGroup, "黄老板快女装！"); 
-					 }
-					}      
-				}
-				else if (msg.fromQQ == 416575098 && msg.msg == "艹") {
-					CQ_sendGroupMsg(ac, msg.fromGroup, "艹！コウちゃん 艹！");
-					 
-				}
-				else if (msg.fromQQ == 416575098 && msg.msg == "？") {
-					CQ_sendGroupMsg(ac, msg.fromGroup, "? Kou酱 ?");
-					 
-				}
-				else if (msg.fromQQ == 416575098 && msg.msg == "？？？") {
-					CQ_sendGroupMsg(ac, msg.fromGroup, "??? Kou酱 ???");
-					 
-				}
+			else if (msg.msg == "mc:sponge") {
+				CQ_sendGroupMsg(ac, msg.fromGroup, "https://docs.spongepowered.org/stable/zh-CN/server/spongineer/commands.html");
 			}
-			else if (msg.msg == "!Server") {
-				CQ_sendGroupMsg(ac, msg.fromGroup, " 玩MC請加765455518，目前有1.12.2的工业服务器和1.14.2原版。使用Sponge和Spigot作为服务器内核，详细ip地址请进群查看");
-
-					//CQ_sendGroupMsg(ac, fromGroup, "歡迎加入， 玩MC請加765455518");
-
+			else if (msg.msg == "site:随机色图") {
+				CQ_sendGroupMsg(ac, msg.fromGroup, "懒得写，自己上 https://api.lolicon.app/setu/view.php");
 			}
-
-
-			/*		其      他		*/
-			else if (msg.msg == "!github") { 
-				CQ_sendGroupMsg(ac, msg.fromGroup, "这代码tmd臭死了 https://github.com/inkchan2333/inkchan"); 
-				 
+			else if (msg.msg == "site:pp+") {
+				CQ_sendGroupMsg(ac, msg.fromGroup, "https://syrin.me/ 除了osu chan另一个网站就是pp plus, 上不去请挂个梯！");
 			}
-			else if (msg.msg == "!简单整合包") {
-				CQ_sendGroupMsg(ac, msg.fromGroup, "？（满速）整合包下载地址： https://cola.sayobot.cn/inkcake/Minecraft%201.12.2%20IC2%20forge2768%20Shaders.zip");
+			else if (msg.msg == "site:pp") {
+				CQ_sendGroupMsg(ac, msg.fromGroup, "世界上最全的pp图网址 https://grumd.github.io/osu-pps/#/osu/maps");
 			}
-
-			/* 
-			
-								####  提醒  ###
-			
-																		*/
-			else if (msg.msg == "糕姐" || msg.msg == "糕姐！") {
-				CQ_sendPrivateMsg(ac, 982957484, "有人叫你！");
+			else if (msg.msg == "site:newpp") {
+				CQ_sendGroupMsg(ac, msg.fromGroup, "新算法的计算地址：https://newpp.stanr.info/");
 			}
-
-			//Hash Compiler
-			if (msg.msg == "/sha256()") {
-				CQ_sendGroupMsg(ac, msg.fromGroup, "私聊可以编译");
+			/*		else if (msg.msg == "!faq ") {
+				CQ_sendGroupMsg(ac, msg.fromGroup, "");
 			}
-
-			//Shutdown
-			if (msg.fromQQ == 982957484 && msg.msg == "!shutdown,AC=1919810") {
-				CQ_sendGroupMsg(ac, msg.fromGroup, "[CQ:at,qq=982957484] AC码已确认，正在关闭MsgSub。请脑残主人为自己写下的命令负责。");
-				break;
-			}
-		
+			*/
+	
 		}
 		else
 		{
