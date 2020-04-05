@@ -8,14 +8,14 @@
 #include <windows.web.h>
 #include <cstring>
 
-long long msg_delay = -114514;
-long long msg_delay_mofu = -114514;
 
 #define random(x) (rand()%x)
 
 #include <string.h>
 //导入全局变量 ac   在appmain.h 中定义
 
+
+unsigned long long delay_omikuji;
 extern int ac;
 void GroupMsgSub::threadMain()
 {
@@ -69,10 +69,21 @@ void GroupMsgSub::threadMain()
 			else if (msg.msg == "site:newpp") {
 				CQ_sendGroupMsg(ac, msg.fromGroup, "新算法的计算地址：https://newpp.stanr.info/");
 			}
-			/*		else if (msg.msg == "!faq ") {
-				CQ_sendGroupMsg(ac, msg.fromGroup, "");
+			else if (msg.msg == ".jrsc") {
+				if (msg.fromQQ == 2047192802) {
+					CQ_sendGroupMsg(ac, msg.fromGroup, "咱也不敢问，咱也不敢讲");
+				}
+				else {
+					if (time(0) % 2 == 0) {
+						CQ_sendGroupMsg(ac, msg.fromGroup, "不冲");
+					}
+					else {
+						CQ_sendGroupMsg(ac, msg.fromGroup, "冲");
+					}
+				}
+
+
 			}
-			*/
 	
 		}
 		else
